@@ -10,13 +10,17 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Better Syntax Support
     Plug 'sheerun/vim-polyglot'
-    " File Explorer
+    
+	" File Explorer
     Plug 'scrooloose/NERDTree'
-    " Auto pairs for '(' '[' '{'
+    
+	" Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
 
+	" Theme
     Plug 'morhetz/gruvbox'
 
+	" Airline Status Bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
