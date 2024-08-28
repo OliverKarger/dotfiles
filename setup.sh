@@ -49,12 +49,10 @@ fi
 
 # Clone .dotfiles from my personal Repo
 echo -n "Cloning Dotfiles..."
-if test -d ~/.config;
-then
-	rm -rf ~/.config
-fi
 mkdir -p /tmp/dotfiles
 git clone --quiet https://git.oliver-karger.de/oliverkarger/.dotfiles.git /tmp/dotfiles 1>/dev/null
+
+mkdir -p ~/.config/nvim
 cp -r /tmp/dotfiles/nvim ~/.config/nvim
 rm -rf /tmp/dotfiles
 echo "DONE"
