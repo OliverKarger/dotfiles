@@ -10,10 +10,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Better Syntax Support
     Plug 'sheerun/vim-polyglot'
-    
-	" File Explorer
-    Plug 'scrooloose/NERDTree'
-    
+   
+	" COC	
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 	" Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
 
@@ -23,5 +23,16 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" Airline Status Bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+	
+	" Telescope
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-telescope/telescope.nvim'
+	Plug 'nvim-telescope/telescope-file-browser.nvim'
 
+	" fzf
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+	Plug 'junegunn/fzf.vim'
+
+	" Terminal Plugin
+	Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 call plug#end()
