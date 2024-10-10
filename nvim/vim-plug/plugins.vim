@@ -35,4 +35,13 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" Terminal Plugin
 	Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+	
+	" LSP
+	Plug 'williamboman/nvim-lsp-installer'
+	Plug 'neovim/nvim-lspconfig'
+
+	" Snippets
+	Plug 'hrsh7th/vim-vsnip'
+	Plug 'hrsh7th/vim-vsnip-integ'
+
 call plug#end()
