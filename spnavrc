@@ -1,6 +1,10 @@
 sensitivity = 1.0
 kbmap0 = Z
 kbmap1 = Tab
+kbmap11 = Escape
+kbmap12 = Alt_L
+kbmap13 = Shift_L
+kbmap14 = Control_L
 
 led = on
 
