@@ -23,15 +23,15 @@ require"nvim-lsp-installer".setup{
 	automatic_installation = true
 }
 EOF
-lua require('lspconfig').csharp_ls.setup {}
-lua require('lspconfig').vimls.setup {}
+" lua require('lspconfig').csharp_ls.setup {}
+" lua require('lspconfig').vimls.setup {}
 lua require('lspconfig').cmake.setup {}
 lua require('lspconfig').clangd.setup {}
-lua require('lspconfig').sumneka_lua.setup {}
+" lua require('lspconfig').sumneka_lua.setup {}
 " --- LSP: End ---
 
 " --- Telescope: Start ---
-autocmd VimEnter * silent! lua require('telescope.builtin').find_files()
+" autocmd VimEnter * silent! lua require('telescope.builtin').find_files()
 lua << EOF
 require'telescope'.setup {
 	defaults = {
@@ -70,4 +70,7 @@ nnoremap <silent> <C-w><Up> <C-w>k
 nnoremap <silent> <C-w><Down> <C-w>j
 nnoremap <silent> <C-w><Left> <C-w>h
 nnoremap <silent> <C-w><Right> <C-w>l
+nnoremap <silent> <C-w>v :vsplit<CR>
+nnoremap <silent> <C-w>h :split<CR>
+nnoremap <silent> <C-w>T :term<CR>
 " --- Window Navigation: End ---
