@@ -1,0 +1,7 @@
+sensitivity = 1.0
+kbmap0 = Z
+kbmap1 = Tab
+
+led = on
+
+grab = true
