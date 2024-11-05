@@ -60,3 +60,10 @@ ln -s $(pwd)/spnavrc /etc/spnavrc
 
 systemctl daemon-reload
 systemctl restart spacenavd
+
+# fancontrol
+if [ -f /etc/fancontrol ];
+then
+	rm /etc/fancontrol
+fi
+ln -s $(pwd)/fancontrol /etc/fancontrol

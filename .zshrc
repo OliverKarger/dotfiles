@@ -7,10 +7,10 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 
 # Autocorrection
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Plugins
-plugins=(git)
+plugins=(battery branch colorize git ssh)
 
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
