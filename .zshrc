@@ -37,3 +37,5 @@ if [ -n "$XAUTHORITY" ]; then
     rm -f "$HOME/.Xauthority";     
     ln -s $XAUTHORITY "$HOME/.Xauthority";
 fi
+
+neofetch
