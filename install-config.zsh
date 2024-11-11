@@ -1,5 +1,16 @@
 #!/usr/bin/zsh
 
+clear
+echo "The Following Applications are required so that this Script runs correctly"
+echo "--------------------------------------------------------------------------"
+echo "\t-Neovim"
+echo "\t-ZSH"
+echo "\t-OhMyZSH"
+echo "\t-Alacritty"
+echo "\t-spacenavd"
+echo "\t-fancontrol"
+
+
 # Check if zsh is installed
 if [ ! -f /usr/bin/zsh ]; 
 then
@@ -10,7 +21,7 @@ fi
 # zsh
 echo "Install ZSH Config? (y/n) "
 read zsh_yn
-if [ $zsh_yn -eq "y" ];
+if [ $zsh_yn = "y" ];
 then
     if [ -f ~/.zshrc ]; 
     then
@@ -23,7 +34,7 @@ fi
 # neovim
 echo "Install Neovim Config? (y/n) "
 read neovim_yn
-if [ $neovim_yn -eq "y" ];
+if [ $neovim_yn = "y" ];
 then
     mkdir -p ~/.config/nvim/vim-plug
 
@@ -42,7 +53,7 @@ fi
 
 echo "Install Alacritty Config? (y/n) "
 read alacritty_yn
-if [ $alacritty_yn -eq "y" ];
+if [ $alacritty_yn = "y" ];
 then
     mkdir -p ~/.config/alacritty/themes
 
@@ -70,7 +81,7 @@ fi
 
 echo "Install spacenavd Config? (y/n) "
 read spacenavd_yn
-if [ $spacenavd_yn -eq "y" ];
+if [ $spacenavd_yn = "y" ];
 then
     if [ -f /etc/spnavrc ]; 
     then
@@ -81,7 +92,7 @@ then
 
     echo "Reload spacenavd? (y/n)"
     read reload_spacenavd_yn
-    if [ $reload_sapcenavd_yn -eq "y" ];
+    if [ $reload_sapcenavd_yn = "y" ];
     then
         systemctl daemon-reload
         systemctl restart spacenavd
@@ -90,7 +101,7 @@ fi
 
 echo "Install FanControl Config? (y/n) "
 read fancontrol_yn
-if [ $fancontrol_yn -eq "y" ];
+if [ $fancontrol_yn = "y" ];
 then
     if [ -f /etc/fancontrol ];
     then
