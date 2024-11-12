@@ -1,5 +1,3 @@
-#!/usr/bin/zsh
-
 clear
 echo "The Following Applications are required so that this Script runs correctly"
 echo "--------------------------------------------------------------------------"
@@ -12,7 +10,7 @@ echo "\t-fancontrol"
 
 
 # Check if zsh is installed
-if [ ! -f /usr/bin/zsh ]; 
+if [ ! -f /usr/bin/zsh ] && [ ! -f /bin/zsh ]; 
 then
 	echo "zsh needs to be installed!" >&2
 	exit 1
@@ -112,6 +110,7 @@ echo "Install Neofetch Config? (y/n)"
 read neofetch_yn
 if [ $neofetch_yn = "y" ];
 then
+    mkdir -p ~/.config/neofetch
 	if [ -f ~/.config/neofetch/config.conf ];
 	then
 		rm ~/.config/neofetch/config.conf
