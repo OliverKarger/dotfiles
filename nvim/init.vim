@@ -17,19 +17,6 @@ let g:loaded_netrwFileHandlers = 1
 lua require("toggleterm").setup{}
 " --- Toggleterm: End ---
 
-" --- LSP: Start ---
-lua <<EOF
-require"nvim-lsp-installer".setup{
-	automatic_installation = true
-}
-EOF
-" lua require('lspconfig').csharp_ls.setup {}
-" lua require('lspconfig').vimls.setup {}
-lua require('lspconfig').cmake.setup {}
-lua require('lspconfig').clangd.setup {}
-" lua require('lspconfig').sumneka_lua.setup {}
-" --- LSP: End ---
-
 " --- Telescope: Start ---
 " autocmd VimEnter * silent! lua require('telescope.builtin').find_files()
 lua << EOF
