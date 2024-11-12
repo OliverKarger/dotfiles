@@ -16,11 +16,7 @@ plugins=(battery branch colorize git ssh)
 source $ZSH/oh-my-zsh.sh
 
 # Set preferred Editor for local and remote Connections
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='nvim'
 
 # Compilation Flags
 export ARCHFLAGS="-arch $(uname -m)"

@@ -109,3 +109,14 @@ then
     fi
     ln -s $(pwd)/fancontrol /etc/fancontrol
 fi
+
+echo "Install Neofetch Config? (y/n)"
+read neofetch_yn
+if [ $neofetch_yn = "y" ];
+then
+	if [ -f ~/.config/neofetch/config.conf ];
+	then
+		rm ~/.config/neofetch/config.conf
+	fi
+	ln -s $(pwd)/neofetch/config.conf ~/.config/neofetch/config.conf
+fi
