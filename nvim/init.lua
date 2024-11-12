@@ -15,36 +15,139 @@ local keymap_opts = { noremap = true, silent = true }
 local lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service" }
 
 -- Plugins
-vim.call('plug#begin')
 
--- General Plugins
-Plug('sheerun/vim-polyglot')            -- Polyglot for language support
-Plug('jiangmiao/auto-pairs')            -- Auto pair brackets
-Plug('williamboman/mason.nvim')        -- Mason for LSP management
-Plug('williamboman/mason-lspconfig.nvim') -- Mason LSP config
-Plug('nvim-lualine/lualine.nvim')      -- Lualine statusline
-Plug('nvim-tree/nvim-web-devicons')    -- File icons for Neovim
-Plug('nvim-lua/plenary.nvim')          -- Utility library for Neovim
-Plug('nvim-telescope/telescope.nvim')  -- Telescope fuzzy finder
-Plug('nvim-telescope/telescope-file-browser.nvim') -- Telescope file browser
-Plug('junegunn/fzf')                  -- FZF plugin for fast file searching
-Plug('junegunn/fzf.vim')              -- FZF Vim integration
-Plug('akinsho/toggleterm.nvim', { ['tag'] = '*' }) -- Terminal toggler
-Plug('scottmckendry/cyberdream.nvim')  -- Cyberdream colorscheme
-Plug('mfussenegger/nvim-dap')         -- Debugger integration
-Plug('mfussenegger/nvim-lint')        -- Linting support
-Plug('nvim-neotest/nvim-nio')         -- Neotest plugin
-Plug('rcarriga/nvim-dap-ui')          -- DAP UI for Neovim
-Plug('mhartington/formatter.nvim')    -- Code formatting
-Plug('nvim-pack/nvim-spectre')        -- Search and replace in files
-Plug('neovim/nvim-lspconfig')         -- LSP configurations
-Plug('hrsh7th/nvim-cmp')              -- Completion plugin
-Plug('hrsh7th/cmp-nvim-lsp')          -- LSP completion source
-Plug('saadparwaiz1/cmp_luasnip')      -- LuaSnip completion source
-Plug('L3MON4D3/LuaSnip')              -- Snippet engine
-Plug('folke/which-key.nvim')          -- Keybinding Suggestions
+-- Ensure Packer is installed
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  end
+end
+ensure_packer()
 
-vim.call('plug#end')
+-- Packer setup
+require('packer').startup(function(use)
+  -- Packer itself
+  use 'wbthomason/packer.nvim'  -- Packer manages itself
+
+  -- General Plugins
+  use 'sheerun/vim-polyglot'  -- Language support
+  use 'jiangmiao/auto-pairs'  -- Auto pairs
+  use 'morhetz/gruvbox'      -- Gruvbox colorscheme
+
+  -- Mason for managing LSP servers and tools
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
+
+  -- Lualine for the status line
+  use 'nvim-lualine/lualine.nvim'
+
+  -- File icons
+  use 'nvim-tree/nvim-web-devicons'
+
+  -- Plenary, a dependency for several other plugins
+  use 'nvim-lua/plenary.nvim'
+
+  -- Telescope for fuzzy finding
+  use {
+    'nvim-telescope/telescope.nvim',  -- Main Telescope plugin
+    requires = { 'nvim-lua/plenary.nvim' },  -- Dependency for Telescope
+    cmd = 'Telescope',  -- Lazy-load on command
+    config = function()
+      require('telescope').setup {
+        defaults = {
+          find_command = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--binary-files=without-match',  -- Ignore binary files
+            '--type=f'
+          },
+          file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" }
+        }
+      }
+    end
+  }
+
+
+  -- Telescope file browser
+  use {
+    'nvim-telescope/telescope-file-browser.nvim',
+    requires = { 'nvim-telescope/telescope.nvim' },
+    cmd = 'Telescope file_browser',  -- Lazy-load on command
+  }
+
+  -- FZF Vim integration
+  use {
+    'junegunn/fzf',
+    run = function() vim.fn['fzf#install']() end,  -- Install FZF
+    opt = true  -- Lazy-load
+  }
+
+  use {
+    'junegunn/fzf.vim',
+    opt = true  -- Lazy-load
+  }
+
+
+  -- Toggleterm for terminal integration
+  use {
+    'akinsho/toggleterm.nvim',
+    tag = '*',  -- Latest version
+    cmd = 'ToggleTerm',  -- Lazy-load on command
+    config = function()
+      require("toggleterm").setup()
+    end
+  }
+
+  -- Cyberdream colorscheme
+  use 'scottmckendry/cyberdream.nvim'
+
+  -- Debugger
+  use 'mfussenegger/nvim-dap'
+
+  -- Linting
+  use 'mfussenegger/nvim-lint'
+
+  -- Neotest for testing
+  use 'nvim-neotest/nvim-nio'
+
+  -- DAP UI
+  use 'rcarriga/nvim-dap-ui'
+
+  -- Formatter
+  use 'mhartington/formatter.nvim'
+
+  -- Search and replace
+  use 'nvim-pack/nvim-spectre'
+
+  -- LSP config
+  use 'neovim/nvim-lspconfig'
+
+  -- Completion
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'L3MON4D3/LuaSnip'
+
+  -- Lazy-load Mason LSP config (only when needed)
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    after = 'mason.nvim',  -- Load after Mason is loaded
+    config = function()
+      require('mason-lspconfig').setup({
+        automatic_installation = true,
+        ensure_installed = lsp_servers
+      })
+    end
+  }
+
+end)
 
 -- General Neovim Settings
 vim.opt.termguicolors = true       -- Enable true colors
@@ -76,7 +179,7 @@ vim.api.nvim_set_keymap('n', '<C-w>h', ':split<CR>', keymap_opts)
 vim.api.nvim_set_keymap('n', '<C-w>T', ':term<CR>', keymap_opts)
 
 -- Setup which-key
-require('which-key').setup {}
+-- require('which-key').setup {}
 
 -- Spectre Search Keybindings
 vim.keymap.set('n', '<C-f>s', '<cmd>lua require("spectre").toggle()<CR>', {
@@ -100,30 +203,9 @@ safe_require('lualine').setup({
   }
 })
 
--- Telescope Configuration
-safe_require('telescope').setup {
-  defaults = {
-    find_command = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
-      '--binary-files=without-match',  -- Ignore binary files
-      '--type=f'
-    },
-	file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" }
-  }
-}
-
 -- Telescope Keybindings
 vim.api.nvim_set_keymap('n', '<C-e>', ':Telescope file_browser<CR>', keymap_opts)
 vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope find_files<CR>', keymap_opts)
-
--- Toggleterm Configuration
-safe_require("toggleterm").setup()
 
 -- Mason Plugin Configuration
 safe_require("mason").setup({
@@ -134,12 +216,6 @@ safe_require("mason").setup({
       package_uninstalled = "✗"
     }
   }
-})
-
--- Mason LSP Configuration
-safe_require('mason-lspconfig').setup({
-  automatic_installation = true,
-  ensure_installed = lsp_servers
 })
 
 -- Formatter Configuration

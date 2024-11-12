@@ -36,19 +36,11 @@ echo "Install Neovim Config? (y/n) "
 read neovim_yn
 if [ $neovim_yn = "y" ];
 then
-    mkdir -p ~/.config/nvim/vim-plug
-
     if [ -f ~/.config/nvim/init.lua ]; 
     then
 	    rm -f ~/.config/nvim/init.lua
     fi
     ln -s $(pwd)/nvim/init.lua ~/.config/nvim/init.lua
-
-    if [ -f ~/.config/nvim/vim-plug/plugins.vim ]; 
-    then
-	    rm -f ~/.config/nvim/vim-plug/plugins.vim
-    fi
-    ln -s $(pwd)/nvim/vim-plug/plugins.vim ~/.config/nvim/vim-plug/plugins.vim
 fi
 
 echo "Install Alacritty Config? (y/n) "
