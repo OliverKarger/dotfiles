@@ -40,6 +40,22 @@ nnoremap <C-e> :Telescope file_browser<CR>
 nnoremap <C-s> :Telescope find_files<CR>
 " --- Telescope: End ---
 
+" --- LSP: Start ---
+
+lua << EOF
+require("mason").setup({
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
+    }
+})
+EOF
+
+" --- LSP: End ---
+
 " --- Color Scheme: Start ---
 colorscheme gruvbox
 set background=dark

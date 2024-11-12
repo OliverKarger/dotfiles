@@ -20,6 +20,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" Theme
     Plug 'morhetz/gruvbox'
 
+	" LSP
+	Plug 'williamboman/mason.nvim'
+
 	" Airline Status Bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'

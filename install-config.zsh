@@ -29,6 +29,8 @@ then
 	    rm ~/.zshrc
     fi
     ln -s $(pwd)/.zshrc ~/.zshrc
+	nvim +PlugInstall
+	nvim +MasonInstall csharpier shellcheck sqlfmt vim-language-server
 fi
 
 # neovim
