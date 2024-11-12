@@ -22,6 +22,7 @@ Plug('junegunn/fzf.vim')
 Plug('akinsho/toggleterm.nvim', { ['tag'] = '*' })
 Plug('hrsh7th/vim-vsnip')
 Plug('hrsh7th/vim-vsnip-integ')
+Plug('scottmckendry/cyberdream.nvim')
 
 vim.call('plug#end')
 
@@ -82,14 +83,14 @@ require('mason-lspconfig').setup({
 require('lualine').setup({
 	options = {
 		icons_enabled = true,
-		theme = 'gruvbox-material',
+		theme = 'auto',
 		component_separators = { left = '', right = '' },
 		section_separators = { left = '', right = '' }
 	}
 })
 
 -- Colorscheme
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
 -- Window Navigation

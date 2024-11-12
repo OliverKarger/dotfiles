@@ -64,6 +64,12 @@ then
 
     ln -s $(pwd)/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 
+	if [ -f ~/.config/alacritty/themes/cyberdream.toml ];
+	then
+		rm -f ~/.config/alacritty/themes/cyberdream.toml
+	fi
+	ln -s $(pwd)/alacritty/themes/cyberdream.toml ~/.config/alacritty/themes/cyberdream.toml
+
     if [ -f ~/.config/alacritty/themes/ayu_dark.toml ]; 
     then
 	    rm -f ~/.config/alacritty/themes/ayu_dark.toml
