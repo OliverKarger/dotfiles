@@ -118,3 +118,14 @@ then
 	fi
 	ln -s $(pwd)/neofetch/config.conf ~/.config/neofetch/config.conf
 fi
+
+echo "Install tmux Config? (y/n)"
+read tmux_yn
+if [ $tmux_yn = "y" ];
+then
+    if [ -f ~/.tmux.conf ];
+    then
+        rm ~/.tmux.conf
+    fi
+    ln -s $(pwd)/tmux.conf ~/.tmux.conf
+fi
