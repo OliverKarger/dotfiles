@@ -14,5 +14,6 @@ size=12
 
 [window]
 startup_mode = "windowed"
+dimensions = { columns = 120, lines = 50 } 
 dynamic_padding = true
 opacity = 1.0
