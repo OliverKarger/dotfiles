@@ -29,8 +29,6 @@ then
 	    rm ~/.zshrc
     fi
     ln -s $(pwd)/.zshrc ~/.zshrc
-	nvim +PlugInstall
-	nvim +MasonInstall csharpier shellcheck sqlfmt vim-language-server
 fi
 
 # neovim
@@ -40,11 +38,11 @@ if [ $neovim_yn = "y" ];
 then
     mkdir -p ~/.config/nvim/vim-plug
 
-    if [ -f ~/.config/nvim/init.vim ]; 
+    if [ -f ~/.config/nvim/init.lua ]; 
     then
-	    rm -f ~/.config/nvim/init.vim
+	    rm -f ~/.config/nvim/init.lua
     fi
-    ln -s $(pwd)/nvim/init.vim ~/.config/nvim/init.vim
+    ln -s $(pwd)/nvim/init.lua ~/.config/nvim/init.lua
 
     if [ -f ~/.config/nvim/vim-plug/plugins.vim ]; 
     then

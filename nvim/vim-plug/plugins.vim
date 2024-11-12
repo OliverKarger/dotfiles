@@ -22,9 +22,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" LSP
 	Plug 'williamboman/mason.nvim'
+	Plug 'williamboman/mason-lspconfig.nvim'
 
 	" Airline Status Bar
-    Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 	
 	" Telescope
