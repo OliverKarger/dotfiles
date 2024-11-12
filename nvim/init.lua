@@ -14,7 +14,6 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 
 Plug('sheerun/vim-polyglot')
-Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
 Plug('jiangmiao/auto-pairs')
 Plug('morhetz/gruvbox')
 Plug('williamboman/mason.nvim')
@@ -38,6 +37,7 @@ Plug('nvim-neotest/nvim-nio')
 Plug('rcarriga/nvim-dap-ui')
 Plug('mhartington/formatter.nvim')
 Plug('nvim-pack/nvim-spectre')
+Plug('neovim/nvim-lspconfig')
 
 vim.call('plug#end')
 
@@ -127,3 +127,6 @@ safe_require('mason-lspconfig').setup({
 
 -- Formatter
 safe_require('formatter').setup()
+
+-- LSPConfig
+safe_require('lspconfig').clangd.setup {}
