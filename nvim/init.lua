@@ -11,6 +11,7 @@ end
 local vim = vim
 local Plug = vim.fn['plug#']
 local keymap_opts = { noremap = true, silent = true }
+local lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service" }
 
 -- Plugins
 
@@ -31,8 +32,6 @@ Plug('junegunn/fzf', { ['do'] = function()
 	end })
 Plug('junegunn/fzf.vim')
 Plug('akinsho/toggleterm.nvim', { ['tag'] = '*' })
-Plug('hrsh7th/vim-vsnip')
-Plug('hrsh7th/vim-vsnip-integ')
 Plug('scottmckendry/cyberdream.nvim')
 Plug('mfussenegger/nvim-dap')
 Plug('mfussenegger/nvim-lint')
@@ -41,6 +40,10 @@ Plug('rcarriga/nvim-dap-ui')
 Plug('mhartington/formatter.nvim')
 Plug('nvim-pack/nvim-spectre')
 Plug('neovim/nvim-lspconfig')
+Plug('hrsh7th/nvim-cmp')
+Plug('hrsh7th/cmp-nvim-lsp')
+Plug('saadparwaiz1/cmp_luasnip')
+Plug('L3MON4D3/LuaSnip')
 
 vim.call('plug#end')
 
@@ -50,8 +53,8 @@ vim.wo.number = true
 vim.o.shiftwidth = 4
 vim.o.tabstop = 4
 vim.o.updatetime = 100
-vim.o.undodir = '~/.cache/nvim/undodir'
-vim.o.undofile = true
+-- vim.o.undodir = '~/.cache/nvim/undodir'
+-- vim.o.undofile = true
 vim.o.autoread = true
 vim.o.ruler = true
 vim.o.visualbell = true
@@ -134,36 +137,56 @@ safe_require("mason").setup({
 -- Mason LSP
 safe_require('mason-lspconfig').setup({
 	automatic_installation = true,
-	ensure_installed = { "omnisharp", "lua_ls", "clangd", "bashls", "docker_compose_language_service" }
+	ensure_installed = lsp_servers
 })
 
 -- Formatter
 safe_require('formatter').setup()
 
 -- LSPConfig
-local on_attach = function(client, bufnr)
-    local opts_buffer = { noremap = true, silent = true, buffer = bufnr }
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    -- Mappings: LSP
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts_buffer)
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts_buffer)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts_buffer)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts_buffer)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts_buffer)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts_buffer)
-    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts_buffer)
-    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts_buffer)
-    vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts_buffer)
-    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts_buffer)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts_buffer)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts_buffer)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts_buffer)
-    vim.keymap.set('n', '<leader>f', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts_buffer)
+for _, lsp in ipairs(lsp_servers) do
+	safe_require('lspconfig')[lsp].setup {}
 end
 
-safe_require('lspconfig').clangd.setup { on_attach = on_attach }
-safe_require('lspconfig').omnisharp.setup { on_attach = on_attach }
-safe_require('lspconfig').lua_ls.setup { on_attach = on_attach }
-safe_require('lspconfig').bashls.setup { on_attach = on_attach }
-safe_require('lspconfig').docker_compose_language_service.setup { on_attach = on_attach }
+-- Snippets
+local luasnip = require('luasnip')
+local cmp = require('cmp')
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+    ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+    -- C-b (back) C-f (forward) for snippet placeholder navigation.
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
