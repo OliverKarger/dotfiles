@@ -70,9 +70,9 @@ CONFIGS = {
         }
     },
     "neofetch": {
-        "file_base": "neofetch/",
+        "files_base": "neofetch/",
         "files": [ "config.conf" ],
-        "targets": {
+        "target": {
             "windows": "",
             "unix": "~/.config/neofetch"
         },
@@ -99,7 +99,8 @@ def create_symlink(s, d):
 
 def ensure_path(path):
     """Ensures a Directory Path exists"""
-    Path(path).mkdir(parents=True, exist_ok=True)
+    dir_path = os.path.dirname(path)
+    Path(dir_path).mkdir(parents=True, exist_ok=True)
     print(f" + Creating Path: {path}")
 
 def check_installed(p):
@@ -157,14 +158,22 @@ def main():
         # Loop over Files
         for file in CONFIGS[app]["files"]:
             # Full Local Path
-            file_path = os.path.join(local_base, file)
-            print(f" + Processing File: {file_path}")
+            full_src_path = os.path.join(local_base, file)
+            full_dst_path = os.path.join(dst_p, file)
             
-            # Either create a Symlink or Copy Files
-            if CONFIGS[app]["symlinks"]:
-                create_symlink(file_path, os.path.join(dst_p, file))
-            else:
-                shutil.copyfile(file_path, os.path.join(dst_p, file))
+            print(f" + Processing File: {file}")
+
+            ensure_path(full_dst_path)
+
+            try:
+                # Either create a Symlink or Copy Files
+                if CONFIGS[app]["symlinks"]:
+                    create_symlink(full_src_path, full_dst_path)
+                else:
+                    shutil.copyfile(full_src_path, full_dst_path)
+            except PermissionError:
+                print(f" - Permission Error while processing {file}")
+                continue
 
         if post_install == []:
             print(f"No Post-Install Commands for {app}. Skipping.")
