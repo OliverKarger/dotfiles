@@ -47,8 +47,8 @@ CONFIGS = {
         "files_base": ".",
         "files": [ ".tmux.conf" ],
         "target": {
-            "windows": "",
-            "unix": "~"
+            "windows": "@none",
+            "unix": ""
         },
         "symlinks": True,
         "post_install": {
@@ -60,7 +60,7 @@ CONFIGS = {
         "files_base": ".",
         "files": [ "spnavrc" ],
         "target": {
-            "windows": "",
+            "windows": "@none",
             "unix": "/etc"
         },
         "symlinks": True,
@@ -73,8 +73,8 @@ CONFIGS = {
         "files_base": "neofetch/",
         "files": [ "config.conf" ],
         "target": {
-            "windows": "",
-            "unix": "~/.config/neofetch"
+            "windows": "@none",
+            "unix": ".config/neofetch"
         },
         "symlinks": True,
         "post_install": {
@@ -129,12 +129,12 @@ def main():
         # If Target Path for Platform is "", skip for this Platform
         dst_p = ""
         if is_windows():
-            if CONFIGS[app]["target"]["windows"] == "":
+            if CONFIGS[app]["target"]["windows"] == "@none":
                 print(f" > No Windows Configuration for {app}. Skipping.")
                 continue
             dst_p = os.path.join(Path.home(), CONFIGS[app]["target"]["windows"])
         else:
-            if CONFIGS[app]["target"]["unix"] == "":
+            if CONFIGS[app]["target"]["unix"] == "@none":
                 print(f" > No Unix-like Configuration for {app}. Skipping.")
                 continue
             dst_p = os.path.join(Path.home(), CONFIGS[app]["target"]["unix"])
