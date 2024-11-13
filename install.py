@@ -24,7 +24,11 @@ CONFIGS = {
             "windows": "appdata/local/nvim",
             "unix": ".config/nvim"
         },
-        "symlinks": True
+        "symlinks": True,
+        "post_install": {
+            "windows": [ "nvim +PackerSync" ],
+            "unix": [ "nvim +PackerSync" ]
+        } 
     },
     "alacritty": {
         "files_base": "alacritty/",
@@ -33,7 +37,11 @@ CONFIGS = {
             "windows": "appdata/roaming/alacritty",
             "unix":".config/alacritty"
         },
-        "symlinks": True
+        "symlinks": True,
+        "post_install": {
+            "windows": [],
+            "unix": []
+        }
     },
     "tmux": {
         "files_base": ".",
@@ -42,7 +50,37 @@ CONFIGS = {
             "windows": "",
             "unix": "~"
         },
-        "symlinks": True
+        "symlinks": True,
+        "post_install": {
+            "windows": [],
+            "unix": []
+        }
+    },
+    "spacenavd": {
+        "files_base": ".",
+        "files": [ "spnavrc" ],
+        "target": {
+            "windows": "",
+            "unix": "/etc"
+        },
+        "symlinks": True,
+        "post_install": {
+            "windows": [],
+            "unix": [ "systemctl restart spacenavd" ]
+        }
+    },
+    "neofetch": {
+        "file_base": "neofetch/",
+        "files": [ "config.conf" ],
+        "targets": {
+            "windows": "",
+            "unix": "~/.config/neofetch"
+        },
+        "symlinks": True,
+        "post_install": {
+            "windows": [],
+            "unix": []
+        }
     }
 }
 
@@ -108,7 +146,14 @@ def main():
         if not os.path.exists(local_base):
             print(f" - Local Path {local_base} not found")
             continue
-        
+       
+        # Post Install Commands
+        post_install = []
+        if is_windows():
+            post_install = CONFIGS[app]["post_install"]["windows"]
+        else:
+            post_install = CONFIGS[app]["post_install"]["unix"]
+
         # Loop over Files
         for file in CONFIGS[app]["files"]:
             # Full Local Path
@@ -120,6 +165,14 @@ def main():
                 create_symlink(file_path, os.path.join(dst_p, file))
             else:
                 shutil.copyfile(file_path, os.path.join(dst_p, file))
+
+        if post_install == []:
+            print(f"No Post-Install Commands for {app}. Skipping.")
+            continue
+
+        for pic in post_install:
+            print(f" + Executing Post Install Command: {pic}")
+            os.system(pic)
     
 if __name__ == "__main__":
     main()
