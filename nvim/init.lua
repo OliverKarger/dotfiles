@@ -12,7 +12,7 @@ end
 local vim = vim
 local Plug = vim.fn['plug#']
 local keymap_opts = { noremap = true, silent = true }
-local lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service" }
+local lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright" }
 
 -- Plugins
 
@@ -35,10 +35,6 @@ require('packer').startup(function(use)
   use 'sheerun/vim-polyglot'  -- Language support
   use 'jiangmiao/auto-pairs'  -- Auto pairs
   use 'morhetz/gruvbox'      -- Gruvbox colorscheme
-
-  -- Mason for managing LSP servers and tools
-  use 'williamboman/mason.nvim'
-  use 'williamboman/mason-lspconfig.nvim'
 
   -- Lualine for the status line
   use 'nvim-lualine/lualine.nvim'
@@ -79,7 +75,6 @@ require('packer').startup(function(use)
   use {
     'nvim-telescope/telescope-file-browser.nvim',
     requires = { 'nvim-telescope/telescope.nvim' },
-    cmd = 'Telescope file_browser',  -- Lazy-load on command
   }
 
   -- FZF Vim integration
@@ -134,6 +129,9 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
+
+  -- Mason for managing LSP servers and tools
+  use 'williamboman/mason.nvim'
 
   -- Lazy-load Mason LSP config (only when needed)
   use {
@@ -272,4 +270,5 @@ cmp.setup {
 	  autocomplete = { cmp.TriggerEvent.TextChanged }
   }
 }
+
 

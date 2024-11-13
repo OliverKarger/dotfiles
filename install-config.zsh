@@ -1,13 +1,4 @@
 clear
-echo "The Following Applications are required so that this Script runs correctly"
-echo "--------------------------------------------------------------------------"
-echo "\t-Neovim"
-echo "\t-ZSH"
-echo "\t-OhMyZSH"
-echo "\t-Alacritty"
-echo "\t-spacenavd"
-echo "\t-fancontrol"
-
 
 # Check if zsh is installed
 if [ ! -f /usr/bin/zsh ] && [ ! -f /bin/zsh ]; 
