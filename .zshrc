@@ -34,4 +34,5 @@ if [ -n "$XAUTHORITY" ]; then
     ln -s $XAUTHORITY "$HOME/.Xauthority";
 fi
 
+if [ "$TMUX" = "" ]; then tmux; fi
 neofetch
