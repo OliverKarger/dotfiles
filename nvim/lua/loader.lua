@@ -8,13 +8,13 @@ return {
     for i = 1, #files do
       local f = safe_require(files[i])
       if f and not pcall(function() f.setup() end) then
-        notify("Error while Loading File: " .. files[i], "error")
+        notify("Error while Loading File: " .. files[i], "error", { title = 'Lua Loader' })
         has_error = true
       end
     end
 
     if not has_error then
-      notify(string.format("Loaded %d Lua Files", #files))
+      notify(string.format("Loaded %d Lua Files", #files), 'info', { title = 'Lua Loader' })
     end
   end
 }

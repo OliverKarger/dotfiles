@@ -3,9 +3,7 @@ return {
     local notify = require('notify')
     local success, result = pcall(require, plugin)
     if not success then
-      notify("Plugin Error: " .. plugin, "error")
-      print("Plugin Error: " .. plugin)
-      print(result)
+      notify("Plugin Error: " .. plugin, "error", { title = "Safe Require" })
     end
     return result
   end
