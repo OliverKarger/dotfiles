@@ -1,6 +1,5 @@
 import os
 import shutil
-import subprocess
 from pathlib import Path
 
 """
@@ -27,6 +26,7 @@ CONFIGS = {
             "lua/telescope_config.lua",
             "lua/mason_config.lua",
             "lua/lsp_config.lua",
+            "lua/dap_config.lua",
             "init.lua" 
         ],
         "target": {

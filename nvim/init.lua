@@ -30,6 +30,7 @@ require('packer').startup(function(use)
   use 'scottmckendry/cyberdream.nvim' -- Colorscheme
   use 'mfussenegger/nvim-dap' -- Deubg Adapter
   use 'rcarriga/nvim-dap-ui' -- Debug Adapter UI
+  use 'nvim-neotest/nvim-nio' -- Test UI
   use 'mhartington/formatter.nvim' -- Formatter
   use 'mfussenegger/nvim-lint' -- Linter
   use 'nvim-pack/nvim-spectre' -- Search ad Replace Tool
@@ -82,6 +83,7 @@ require('spectre_config').setup()
 require('telescope_config').setup()
 require('mason_config').setup()
 require('lsp_config').setup()
+require('dap_config').setup()
 
 -- Formatter Configuration
 safe_require('formatter').setup()
