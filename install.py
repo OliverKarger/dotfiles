@@ -22,6 +22,7 @@ CONFIGS = {
             "lua/shared.lua",
             "lua/safe_require.lua", 
             "lua/lualine_config.lua",
+            "lua/ui_config.lua",
             "lua/spectre_config.lua",
             "lua/telescope_config.lua",
             "lua/mason_config.lua",

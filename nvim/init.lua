@@ -22,6 +22,7 @@ require('packer').startup(function(use)
   use 'morhetz/gruvbox'      -- Gruvbox colorscheme
   use 'nvim-lualine/lualine.nvim' -- Status Line
   use 'nvim-tree/nvim-web-devicons' -- Icons
+  use 'stevearc/dressing.nvim' -- UI Improvements
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
   use 'nvim-telescope/telescope-file-browser.nvim'
@@ -41,6 +42,7 @@ require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip' -- Snippets
   use 'williamboman/mason.nvim' -- Mason for managing LSPs and Tools
   use 'williamboman/mason-lspconfig' -- Mason integration for lspconfig
+  use 'stevearc/overseer.nvim' -- Task Management
 end)
 
 -- General Neovim Settings
@@ -79,11 +81,17 @@ vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
 require('lualine_config').setup()
+require('ui_config').setup()
 require('spectre_config').setup()
 require('telescope_config').setup()
 require('mason_config').setup()
 require('lsp_config').setup()
 require('dap_config').setup()
+
+-- Task Management
+safe_require('overseer').setup()
+vim.api.nvim_set_keymap('n', '<C-T>', ':OverseerRun', shared_config.keymap_opts)
+
 
 -- Formatter Configuration
 safe_require('formatter').setup()
