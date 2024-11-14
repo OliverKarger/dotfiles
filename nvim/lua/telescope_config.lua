@@ -18,7 +18,7 @@ return {
           '--binary-files=without-match',  -- Ignore binary files
           '--type=f'
         },
-        file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" }
+        file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" },
       }
     }
 

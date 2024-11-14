@@ -6,15 +6,20 @@ return {
     local luasnip = safe_require('luasnip')
     local cmp = safe_require('cmp')
     local mason_lspconfig = safe_require('mason-lspconfig')
+    local notify = safe_require('notify')
 
     mason_lspconfig.setup({
       automatic_installation = true,
       ensurere_installed = lsp_servers
     })
 
+    local function on_lsp_attach(lspname)
+      notify(string.format('LSP %s attached', lspname), "info", { title = 'LSP' })
+    end
+
     -- LSPConfig Setup
     for _, lsp in ipairs(lsp_servers) do
-      safe_require('lspconfig')[lsp].setup {}
+      safe_require('lspconfig')[lsp].setup { on_attach = function() on_lsp_attach(lsp) end}
     end
 
     -- Snippets and Completion Setup
