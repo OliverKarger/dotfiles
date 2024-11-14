@@ -19,6 +19,11 @@ return {
           '--type=f'
         },
         file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" },
+      },
+      extension = {
+        ["ui-select"] = {
+          safe_require('telescope.themes').get_dropdown {}
+        }
       }
     }
 
