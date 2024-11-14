@@ -16,87 +16,28 @@ ensure_packer()
 
 -- Packer setup
 require('packer').startup(function(use)
-  -- Packer itself
   use 'wbthomason/packer.nvim'  -- Packer manages itself
-
-  -- General Plugins
   use 'sheerun/vim-polyglot'  -- Language support
   use 'jiangmiao/auto-pairs'  -- Auto pairs
   use 'morhetz/gruvbox'      -- Gruvbox colorscheme
-
-  -- Lualine for the status line
-  use 'nvim-lualine/lualine.nvim'
-
-  -- File icons
-  use 'nvim-tree/nvim-web-devicons'
-
-  -- Plenary, a dependency for several other plugins
+  use 'nvim-lualine/lualine.nvim' -- Status Line
+  use 'nvim-tree/nvim-web-devicons' -- Icons
   use 'nvim-lua/plenary.nvim'
-
-  -- Telescope for fuzzy finding
-  use 'nvim-telescope/telescope.nvim'
-
-  -- Telescope file browser
+  use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
   use 'nvim-telescope/telescope-file-browser.nvim'
-
-  -- FZF Vim integration
-  use {
-    'junegunn/fzf',
-    run = function() vim.fn['fzf#install']() end,  -- Install FZF
-    opt = true  -- Lazy-load
-  }
-
-  use {
-    'junegunn/fzf.vim',
-    opt = true  -- Lazy-load
-  }
-
-  -- Toggleterm for terminal integration
-  use {
-    'akinsho/toggleterm.nvim',
-    tag = '*',  -- Latest version
-    cmd = 'ToggleTerm',  -- Lazy-load on command
-    config = function()
-      require("toggleterm").setup()
-    end
-  }
-
-  -- Cyberdream colorscheme
-  use 'scottmckendry/cyberdream.nvim'
-
-  -- Debugger
-  use 'mfussenegger/nvim-dap'
-
-  -- Linting
-  use 'mfussenegger/nvim-lint'
-
-  -- Neotest for testing
-  use 'nvim-neotest/nvim-nio'
-
-  -- DAP UI
-  use 'rcarriga/nvim-dap-ui'
-
-  -- Formatter
+  use 'junegunn/fzf'
+  use 'junegunn/fzf.vim'
+  use 'scottmckendry/cyberdream.nvim' -- Colorscheme
+  use 'rcarriga/nvim-dap-ui' --Debug Adapter UI
   use 'mhartington/formatter.nvim'
-
-  -- Search and replace
-  use 'nvim-pack/nvim-spectre'
-
-  -- LSP config
-  use 'neovim/nvim-lspconfig'
-
-  -- Completion
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'L3MON4D3/LuaSnip'
-
-  -- Mason for managing LSP servers and tools
-  use 'williamboman/mason.nvim'
-
-  -- Lazy-load Mason LSP config (only when needed)
-  use 'williamboman/mason-lspconfig'
-
+  use 'nvim-pack/nvim-spectre' -- Search ad Replace Tool
+  use 'neovim/nvim-lspconfig' -- LSP Configuration
+  use 'hrsh7th/nvim-cmp' -- Autocompletion
+  use 'hrsh7th/cmp-nvim-lsp' -- Autocompletion with LSPs
+  use 'saadparwaiz1/cmp_luasnip' -- Lua Snippets
+  use 'L3MON4D3/LuaSnip' -- Snippets
+  use 'williamboman/mason.nvim' -- Mason for managing LSPs and Tools
+  use 'williamboman/mason-lspconfig' -- Mason integration for lspconfig
 end)
 
 -- General Neovim Settings
