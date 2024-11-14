@@ -42,7 +42,8 @@ end)
 
 -- General Neovim Settings
 vim.opt.termguicolors = true       -- Enable true colors
-vim.wo.number = true             -- Show line numbers
+vim.wo.number = true               -- Show line numbers
+vim.wo.relativenumber = true       -- Relative Line Numbers
 vim.opt.shiftwidth = 4             -- Indentation width
 vim.opt.tabstop = 4               -- Tab width
 vim.opt.updatetime = 100          -- Faster completion
