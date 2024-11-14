@@ -28,8 +28,10 @@ require('packer').startup(function(use)
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim'
   use 'scottmckendry/cyberdream.nvim' -- Colorscheme
-  use 'rcarriga/nvim-dap-ui' --Debug Adapter UI
-  use 'mhartington/formatter.nvim'
+  use 'mfussenegger/nvim-dap' -- Deubg Adapter
+  use 'rcarriga/nvim-dap-ui' -- Debug Adapter UI
+  use 'mhartington/formatter.nvim' -- Formatter
+  use 'mfussenegger/nvim-lint' -- Linter
   use 'nvim-pack/nvim-spectre' -- Search ad Replace Tool
   use 'neovim/nvim-lspconfig' -- LSP Configuration
   use 'hrsh7th/nvim-cmp' -- Autocompletion
