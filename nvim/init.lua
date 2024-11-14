@@ -26,6 +26,7 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
   use 'nvim-telescope/telescope-file-browser.nvim'
+  use 'nvim-telescope/telescope-ui-select.nvim'
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim'
   use 'scottmckendry/cyberdream.nvim' -- Colorscheme
@@ -90,7 +91,7 @@ require('dap_config').setup()
 
 -- Task Management
 safe_require('overseer').setup()
-vim.api.nvim_set_keymap('n', '<C-T>', ':OverseerRun', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-R>', ':OverseerRun<CR>', shared_config.keymap_opts)
 
 
 -- Formatter Configuration
