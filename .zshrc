@@ -25,6 +25,9 @@ export ARCHFLAGS="-arch $(uname -m)"
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 
+# Terminal Colors
+export TERM="screen-256color"
+
 # Aliases
 export ll='ls -la'
 

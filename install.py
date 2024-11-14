@@ -20,6 +20,7 @@ CONFIGS = {
         "files_base": "nvim/",
         "files": [ 
             "lua/shared.lua",
+            "lua/loader.lua",
             "lua/safe_require.lua", 
             "lua/lualine_config.lua",
             "lua/ui_config.lua",

@@ -1,21 +1,26 @@
-[general]
-import = [
-	"~/.config/alacritty/themes/cyberdream.toml",
-]
-
-[terminal.shell]
-program="zsh"
 
 [font]
-size=14
+size = 14
 
-	[font.normal]
-	family = "Mononoki Nerd Font"
+[font.normal]
+family = "Mononoki Nerd Font"
+
+[terminal.shell]
+program = "zsh"
 
 [window]
-startup_mode = "windowed"
-dimensions = { columns = 120, lines = 50 } 
 dynamic_padding = true
-opacity = 1.0
-padding = { x = 2, y = 2 }
 dynamic_title = true
+opacity = 1.0
+startup_mode = "windowed"
+
+[window.dimensions]
+columns = 120
+lines = 50
+
+[window.padding]
+x = 2
+y = 2
+
+[general]
+import = ["/home/olli/.config/alacritty/themes/cyberdream.toml"]

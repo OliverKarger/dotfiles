@@ -1,0 +1,28 @@
+# General settings
+import:
+  - ~/.config/alacritty/themes/cyberdream.toml
+
+# Shell settings
+terminal:
+  shell:
+    program: "zsh"
+
+# Font settings
+font:
+  size: 14
+  normal:
+    family: "Mononoki Nerd Font"
+
+# Window settings
+window:
+  startup_mode: "windowed"
+  dimensions:
+    columns: 120
+    lines: 50
+  dynamic_padding: true
+  opacity: 1.0
+  padding:
+    x: 2
+    y: 2
+  dynamic_title: true
+

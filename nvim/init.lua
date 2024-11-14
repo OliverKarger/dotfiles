@@ -1,5 +1,6 @@
 local safe_require = require('safe_require').safe_require
 local shared_config = require('shared')
+local load_files = require('loader').load_files
 
 -- Variables
 local vim = vim
@@ -23,10 +24,15 @@ require('packer').startup(function(use)
   use 'nvim-lualine/lualine.nvim' -- Status Line
   use 'nvim-tree/nvim-web-devicons' -- Icons
   use 'stevearc/dressing.nvim' -- UI Improvements
+  use 'rcarriga/nvim-notify' -- Notifications
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'nvim-telescope/telescope-ui-select.nvim'
+  use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate'
+  }
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim'
   use 'scottmckendry/cyberdream.nvim' -- Colorscheme
@@ -59,6 +65,7 @@ vim.opt.visualbell = true         -- Visual bell instead of audible bell
 vim.opt.wrap = true               -- Wrap lines
 vim.opt.autoindent = true         -- Auto indentation
 vim.opt.smartindent = true        -- Smart indentation
+vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = "1"
 vim.cmd('filetype indent on')   -- Enable filetype-based indentation
 
 -- Disable netrw (default Neovim Directory Browser)
@@ -81,13 +88,7 @@ vim.api.nvim_set_keymap('n', '<C-t>', '<Nop>', shared_config.keymap_opts)
 vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
-require('lualine_config').setup()
-require('ui_config').setup()
-require('spectre_config').setup()
-require('telescope_config').setup()
-require('mason_config').setup()
-require('lsp_config').setup()
-require('dap_config').setup()
+load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
 
 -- Task Management
 safe_require('overseer').setup()
