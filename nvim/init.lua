@@ -1,20 +1,8 @@
--- "safe" require wrapper
-local function safe_require(plugin)
-  local success, result = pcall(require, plugin)
-  if not success then
-    print("Plugin Error: " .. plugin)
-	print(result)
-  end
-  return result
-end
+local safe_require = require('safe_require').safe_require
+local shared_config = require('shared')
 
 -- Variables
 local vim = vim
-local Plug = vim.fn['plug#']
-local keymap_opts = { noremap = true, silent = true }
-local lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright" }
-
--- Plugins
 
 -- Ensure Packer is installed
 local ensure_packer = function()
@@ -140,7 +128,7 @@ require('packer').startup(function(use)
     config = function()
       require('mason-lspconfig').setup({
         automatic_installation = true,
-        ensure_installed = lsp_servers
+        ensure_installed = shared_config.lsp_servers
       })
     end
   }
@@ -168,107 +156,23 @@ vim.g.loaded_netrwSettings = 1
 vim.g.loaded_netrwFileHandlers = 1
 
 -- Window Navigation Keybindings
-vim.api.nvim_set_keymap('n', '<C-w><Up>', '<C-w>k', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-w><Down>', '<C-w>j', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-w><Left>', '<C-w>h', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-w><Right>', '<C-w>l', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-w>v', ':vsplit<CR>', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-w>h', ':split<CR>', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-w>T', ':term<CR>', keymap_opts)
-
--- Setup which-key
--- require('which-key').setup {}
-
--- Spectre Search Keybindings
-vim.keymap.set('n', '<C-f>s', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = "Toggle Spectre"
-})
-vim.keymap.set('n', '<C-f>w', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = "Search current Word"
-})
+vim.api.nvim_set_keymap('n', '<C-w><Up>', '<C-w>k', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-w><Down>', '<C-w>j', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-w><Left>', '<C-w>h', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-w><Right>', '<C-w>l', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-w>v', ':vsplit<CR>', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-w>h', ':split<CR>', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-w>T', ':term<CR>', shared_config.keymap_opts)
 
 -- Colorscheme and Background
 vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
--- Lualine Configuration
-safe_require('lualine').setup({
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' }
-  }
-})
-
--- Telescope Keybindings
-vim.api.nvim_set_keymap('n', '<C-e>', ':Telescope file_browser<CR>', keymap_opts)
-vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope find_files<CR>', keymap_opts)
-
--- Mason Plugin Configuration
-safe_require("mason").setup({
-  ui = {
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
-    }
-  }
-})
+require('lualine_config').setup()
+require('spectre_config').setup()
+require('telescope_config').setup()
+require('mason_config').setup()
+require('lsp_config').setup()
 
 -- Formatter Configuration
 safe_require('formatter').setup()
-
--- LSPConfig Setup
-for _, lsp in ipairs(lsp_servers) do
-  safe_require('lspconfig')[lsp].setup {}
-end
-
--- Snippets and Completion Setup
-local luasnip = require('luasnip')
-local cmp = require('cmp')
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Scroll up
-    ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Scroll down
-    ['<C-Space>'] = cmp.mapping.complete(),  -- Trigger completion
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  }),
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-	{ name = 'buffer' },
-	{ name = 'path' }
-  },
-  completion = {
-	  autocomplete = { cmp.TriggerEvent.TextChanged }
-  }
-}
-
-

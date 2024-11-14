@@ -19,7 +19,16 @@ How this Works:
 CONFIGS = {
     "nvim": {
         "files_base": "nvim/",
-        "files": [ "init.lua" ],
+        "files": [ 
+            "lua/shared.lua",
+            "lua/safe_require.lua", 
+            "lua/lualine_config.lua",
+            "lua/spectre_config.lua",
+            "lua/telescope_config.lua",
+            "lua/mason_config.lua",
+            "lua/lsp_config.lua",
+            "init.lua" 
+        ],
         "target": {
             "windows": "appdata/local/nvim",
             "unix": ".config/nvim"
