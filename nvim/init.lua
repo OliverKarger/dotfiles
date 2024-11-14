@@ -1,6 +1,6 @@
 local safe_require = require('safe_require').safe_require
-local shared_config = require('shared')
-local load_files = require('loader').load_files
+local shared_config = safe_require('shared')
+local load_files = safe_require('loader').load_files
 
 -- Variables
 local vim = vim
@@ -93,7 +93,6 @@ load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config
 -- Task Management
 safe_require('overseer').setup()
 vim.api.nvim_set_keymap('n', '<C-R>', ':OverseerRun<CR>', shared_config.keymap_opts)
-
 
 -- Formatter Configuration
 safe_require('formatter').setup()
