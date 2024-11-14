@@ -69,6 +69,7 @@ vim.api.nvim_set_keymap('n', '<C-w><Right>', '<C-w>l', shared_config.keymap_opts
 vim.api.nvim_set_keymap('n', '<C-w>v', ':vsplit<CR>', shared_config.keymap_opts)
 vim.api.nvim_set_keymap('n', '<C-w>h', ':split<CR>', shared_config.keymap_opts)
 vim.api.nvim_set_keymap('n', '<C-w>T', ':term<CR>', shared_config.keymap_opts)
+vim.api.nvim_set_keymap('n', '<C-t>', '<Nop>', shared_config.keymap_opts)
 
 -- Colorscheme and Background
 vim.cmd('colorscheme cyberdream')
