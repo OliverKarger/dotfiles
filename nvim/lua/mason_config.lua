@@ -1,17 +1,16 @@
 local safe_require = require('safe_require').safe_require
 
-local module = {}
-
-function module.setup()
-  safe_require("mason").setup({
-    ui = {
-      icons = {
-        package_installed = "✓",
-        package_pending = "➜",
-        package_uninstalled = "✗"
-      }
-    }
-  })
-end
-
-return module
+return {
+  setup = function()
+    local mason = safe_require('mason')
+    mason.setup({
+        ui = {
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+          }
+        }
+      })
+  end
+}

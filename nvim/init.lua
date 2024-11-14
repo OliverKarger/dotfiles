@@ -34,36 +34,10 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   -- Telescope for fuzzy finding
-  use {
-    'nvim-telescope/telescope.nvim',  -- Main Telescope plugin
-    requires = { 'nvim-lua/plenary.nvim' },  -- Dependency for Telescope
-    cmd = 'Telescope',  -- Lazy-load on command
-    config = function()
-      require('telescope').setup {
-        defaults = {
-          find_command = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--binary-files=without-match',  -- Ignore binary files
-            '--type=f'
-          },
-          file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" }
-        }
-      }
-    end
-  }
-
+  use 'nvim-telescope/telescope.nvim'
 
   -- Telescope file browser
-  use {
-    'nvim-telescope/telescope-file-browser.nvim',
-    requires = { 'nvim-telescope/telescope.nvim' },
-  }
+  use 'nvim-telescope/telescope-file-browser.nvim'
 
   -- FZF Vim integration
   use {
@@ -76,7 +50,6 @@ require('packer').startup(function(use)
     'junegunn/fzf.vim',
     opt = true  -- Lazy-load
   }
-
 
   -- Toggleterm for terminal integration
   use {
@@ -122,16 +95,7 @@ require('packer').startup(function(use)
   use 'williamboman/mason.nvim'
 
   -- Lazy-load Mason LSP config (only when needed)
-  use {
-    'williamboman/mason-lspconfig.nvim',
-    after = 'mason.nvim',  -- Load after Mason is loaded
-    config = function()
-      require('mason-lspconfig').setup({
-        automatic_installation = true,
-        ensure_installed = shared_config.lsp_servers
-      })
-    end
-  }
+  use 'williamboman/mason-lspconfig'
 
 end)
 

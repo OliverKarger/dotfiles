@@ -1,10 +1,27 @@
-local module = {}
+local safe_require = require('safe_require').safe_require
 
-local shared_config = require('shared')
+return {
+  setup = function()
+    local telescope = safe_require('telescope')
+    local keymap_opts = require('shared').keymap_opts
+    telescope.setup {
+      defaults = {
+        find_command = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--binary-files=without-match',  -- Ignore binary files
+          '--type=f'
+        },
+        file_ignore_patterns = { "*.git/*", "bin/*", "obj/*" }
+      }
+    }
 
-function module.setup()
-  vim.api.nvim_set_keymap('n', '<C-e>', ':Telescope file_browser<CR>', shared_config.keymap_opts)
-  vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope find_files<CR>', shared_config.keymap_opts)
-end
-
-return module
+    vim.api.nvim_set_keymap('n', '<C-e>', ':Telescope file_browser<CR>', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope find_files<CR>', keymap_opts)
+  end
+}
