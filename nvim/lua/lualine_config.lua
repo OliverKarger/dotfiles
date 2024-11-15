@@ -3,6 +3,11 @@ local utils = require('utils')
 return {
   setup = function()
     local lualine = utils.safe_require('lualine')
+
+    local function on_theme_click()
+      vim.cmd(":Themery")
+    end
+
     lualine.setup({
       options = {
         icons_enabled = true,
@@ -16,17 +21,20 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff' },
-        lualine_y = { 'filename', 'filetype', 'progress' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress, location' },
         lualine_z = {
-          function()
-            local clients = vim.lsp.get_active_clients()
-            if #clients == 0 then
-              return 'No LSP'
+          {
+            utils.get_current_theme,
+            on_click = function()
+              on_theme_click()
             end
-            -- Get the name of the first active LSP client
-            return clients[1].name
-          end, -- Custom component to display LSP name
+          },
+          {
+            utils.get_attached_lsp
+          }
         },
       },
       extensions = { "fzf" }

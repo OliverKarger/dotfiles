@@ -27,5 +27,18 @@ return {
     if not has_error then
       notify(string.format("Loaded %d Lua Files", #files), 'info', { title = 'Lua Loader' })
     end
+  end,
+
+  get_current_theme = function()
+    return vim.g.colors_name
+  end,
+
+  get_attached_lsp = function()
+    local clients = vim.lsp.get_active_clients()
+    if #clients == 0 then
+      return 'No LSP'
+    end
+    -- Get the name of the first active LSP client
+    return clients[1].name
   end
 }
