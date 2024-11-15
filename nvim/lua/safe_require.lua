@@ -1,9 +1,13 @@
 return {
   safe_require = function(plugin)
-    local notify = require('notify')
     local success, result = pcall(require, plugin)
     if not success then
-      notify("Plugin Error: " .. plugin, "error", { title = "Safe Require" })
+      local notify_s, notify_r = pcall(require, "notify")
+        if not notify_s then
+          print("Plugin Error: " .. plugin)
+        else
+          notify_r("Plugin Error: " .. plugin, "error", { title = "Safe Require" })
+        end
     end
     return result
   end

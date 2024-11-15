@@ -14,7 +14,7 @@ return {
     })
 
     local function on_lsp_attach(lspname)
-      notify(string.format('LSP %s attached', lspname), "info", { title = 'LSP' })
+      notify(string.format('Language Server %s attached', lspname), "info", { title = 'LSP' })
     end
 
     -- LSPConfig Setup
