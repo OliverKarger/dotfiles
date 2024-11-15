@@ -1,8 +1,8 @@
 local utils = require('utils')
+local settings = require('settings')
 
 return {
   setup = function()
-    local lsp_servers = utils.safe_require('shared').lsp_servers
     local luasnip = utils.safe_require('luasnip')
     local cmp = utils.safe_require('cmp')
     local mason_lspconfig = utils.safe_require('mason-lspconfig')
@@ -10,7 +10,7 @@ return {
 
     mason_lspconfig.setup({
       automatic_installation = true,
-      ensurere_installed = lsp_servers
+      ensurere_installed = settings.lsp_servers
     })
 
     local function on_lsp_attach(lspname)
@@ -18,7 +18,7 @@ return {
     end
 
     -- LSPConfig Setup
-    for _, lsp in ipairs(lsp_servers) do
+    for _, lsp in ipairs(settings.lsp_servers) do
       utils.safe_require('lspconfig')[lsp].setup { on_attach = function() on_lsp_attach(lsp) end}
     end
 

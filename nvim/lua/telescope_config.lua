@@ -1,9 +1,9 @@
 local utils = require('utils')
+local settings = require('settings')
 
 return {
   setup = function()
     local telescope = utils.safe_require('telescope')
-    local keymap_opts = utils.safe_require('shared').keymap_opts
     
     telescope.setup {
       defaults = {
@@ -29,7 +29,7 @@ return {
 
     telescope.load_extension("ui-select")
 
-    vim.api.nvim_set_keymap('n', '<C-e>', ':Telescope file_browser<CR>', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope find_files<CR>', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<C-e>', ':Telescope file_browser<CR>', settings.keymap_opts)
+    vim.api.nvim_set_keymap('n', '<C-s>', ':Telescope find_files<CR>', settings.keymap_opts)
   end
 }

@@ -21,7 +21,7 @@ CONFIGS = {
         "files": [ 
             "lua/shared.lua",
             "lua/utils.lua",
-            "lua/safe_require.lua", 
+            "lua/settings.lua",
             "lua/lualine_config.lua",
             "lua/ui_config.lua",
             "lua/spectre_config.lua",
