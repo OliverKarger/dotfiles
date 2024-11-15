@@ -172,7 +172,8 @@ return {
     local fluoromachine = utils.safe_require('fluoromachine')
     fluoromachine.setup({
       glow = true,
-      theme = 'retrowave'
+      theme = 'retrowave',
+      transparent = true
     })
 
     local themery = utils.safe_require('themery')
