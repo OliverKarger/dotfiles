@@ -1,6 +1,5 @@
-local safe_require = require('safe_require').safe_require
-local shared_config = safe_require('shared')
-local load_files = safe_require('loader').load_files
+local utils = require('utils')
+local shared_config = utils.safe_require('shared')
 
 -- Variables
 local vim = vim
@@ -88,11 +87,11 @@ vim.api.nvim_set_keymap('n', '<C-t>', '<Nop>', shared_config.keymap_opts)
 vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
-load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
+utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
 
 -- Task Management
-safe_require('overseer').setup()
+utils.safe_require('overseer').setup()
 vim.api.nvim_set_keymap('n', '<C-R>', ':OverseerRun<CR>', shared_config.keymap_opts)
 
 -- Formatter Configuration
-safe_require('formatter').setup()
+utils.safe_require('formatter').setup()

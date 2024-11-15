@@ -1,9 +1,9 @@
-local safe_require = require('safe_require').safe_require
+local utils = require('utils')
 
 return {
   setup = function()
-    local telescope = safe_require('telescope')
-    local keymap_opts = require('shared').keymap_opts
+    local telescope = utils.safe_require('telescope')
+    local keymap_opts = utils.safe_require('shared').keymap_opts
     
     telescope.setup {
       defaults = {
@@ -22,7 +22,7 @@ return {
       },
       extension = {
         ["ui-select"] = {
-          safe_require('telescope.themes').get_dropdown {}
+          utils.safe_require('telescope.themes').get_dropdown {}
         }
       }
     }

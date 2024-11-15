@@ -1,12 +1,12 @@
-local safe_require = require('safe_require').safe_require
+local utils = require('utils')
 
 return {
   setup = function()
-    local lsp_servers = safe_require('shared').lsp_servers
-    local luasnip = safe_require('luasnip')
-    local cmp = safe_require('cmp')
-    local mason_lspconfig = safe_require('mason-lspconfig')
-    local notify = safe_require('notify')
+    local lsp_servers = utils.safe_require('shared').lsp_servers
+    local luasnip = utils.safe_require('luasnip')
+    local cmp = utils.safe_require('cmp')
+    local mason_lspconfig = utils.safe_require('mason-lspconfig')
+    local notify = utils.safe_require('notify')
 
     mason_lspconfig.setup({
       automatic_installation = true,
@@ -19,7 +19,7 @@ return {
 
     -- LSPConfig Setup
     for _, lsp in ipairs(lsp_servers) do
-      safe_require('lspconfig')[lsp].setup { on_attach = function() on_lsp_attach(lsp) end}
+      utils.safe_require('lspconfig')[lsp].setup { on_attach = function() on_lsp_attach(lsp) end}
     end
 
     -- Snippets and Completion Setup

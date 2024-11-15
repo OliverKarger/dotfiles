@@ -1,9 +1,9 @@
-local safe_require = require('safe_require').safe_require
+local utils = require('utils')
 
 return {
   setup = function()
-    local dap = safe_require('dap')
-    local dap_ui = safe_require('dapui')
+    local dap = utils.safe_require('dap')
+    local dap_ui = utils.safe_require('dapui')
     dap.adapters.codelldb = {
       type = 'server',
       port = '${port}',

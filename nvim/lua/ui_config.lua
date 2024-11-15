@@ -1,8 +1,8 @@
-local safe_require = require('safe_require').safe_require
+local utils = require('utils')
 
 return {
   setup = function()
-    local ui = safe_require('dressing')
+    local ui = utils.safe_require('dressing')
 
     ui.setup({
       input = {

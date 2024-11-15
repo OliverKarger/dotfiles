@@ -1,8 +1,8 @@
-local safe_require = require('safe_require').safe_require
+local utils = require('utils')
 
 return {
   setup = function()
-    local mason = safe_require('mason')
+    local mason = utils.safe_require('mason')
     mason.setup({
         ui = {
           icons = {

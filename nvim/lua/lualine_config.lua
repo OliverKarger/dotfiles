@@ -1,8 +1,8 @@
-local safe_require = require('safe_require').safe_require
+local utils = require('utils')
 
 return {
   setup = function()
-    local lualine = safe_require('lualine')
+    local lualine = utils.safe_require('lualine')
     lualine.setup({
       options = {
         icons_enabled = true,
