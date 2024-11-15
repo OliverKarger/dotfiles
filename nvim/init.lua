@@ -26,6 +26,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'  -- Packer manages itself
   use 'sheerun/vim-polyglot'  -- Language support
   use 'jiangmiao/auto-pairs'  -- Auto pairs
+  use 'MunifTanjim/nui.nvim' -- I don't know and certainly don't care
 
   -- Themes
   use 'morhetz/gruvbox'      -- Gruvbox Theme
@@ -65,6 +66,7 @@ require('packer').startup(function(use)
   use 'nvim-pack/nvim-spectre' -- Search ad Replace Tool 
   use 'stevearc/overseer.nvim' -- Task Management
   use 'zaldih/themery.nvim' -- Theme Management
+  use 'superbo/fugit2.nvim' -- Git GUI
 
 end)
 

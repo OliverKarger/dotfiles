@@ -21,7 +21,21 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_b = {
+          {
+            'branch',
+            on_click = function()
+              vim.cmd(':Fugit2Graph')
+            end
+          },
+          {
+            'diff',
+            on_click = function()
+              vim.cmd(':Fugit2Diff')
+            end
+          }
+        },
+        -- lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress, location' },
