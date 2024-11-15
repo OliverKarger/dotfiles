@@ -169,9 +169,15 @@ return {
       },
     })
 
+    local fluoromachine = utils.safe_require('fluoromachine')
+    fluoromachine.setup({
+      glow = true,
+      theme = 'retrowave'
+    })
+
     local themery = utils.safe_require('themery')
     themery.setup({
-      themes = { 'gruvbox', 'cyberdream', 'moonfly', 'nordic' },
+      themes = { 'gruvbox', 'cyberdream', 'moonfly', 'nordic', 'fluoromachine' },
       livePreview = true
     })
   end

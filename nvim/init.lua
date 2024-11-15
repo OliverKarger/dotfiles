@@ -34,6 +34,7 @@ require('packer').startup(function(use)
   use 'olimorris/onedarkpro.nvim' -- One Dark Pro Theme
   use 'alexvzyl/nordic.nvim' -- Nordic Theme
   use 'bluz71/vim-moonfly-colors' -- Moonfly Colors Theme
+  use 'maxmx03/fluoromachine.nvim' -- Synthwave84 x Fluoromachine Theme
 
   -- File Browser
   use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
