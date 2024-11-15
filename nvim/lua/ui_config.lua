@@ -168,5 +168,11 @@ return {
         get_config = nil,
       },
     })
+
+    local themery = utils.safe_require('themery')
+    themery.setup({
+      themes = { 'gruvbox', 'cyberdream', 'moonfly', 'nordic' },
+      livePreview = true
+    })
   end
 }

@@ -11,7 +11,8 @@ return {
         section_separators = { left = '', right = '' },
         always_divide_middle = true,
         always_show_tabline = true,
-        globalstatus = true
+        globalstatus = true,
+        disabled_filetypes = { "NvimTree", "packer", "COMMIT_EDITMSG" }
       },
       sections = {
         lualine_a = { 'mode' },
@@ -28,6 +29,7 @@ return {
           end, -- Custom component to display LSP name
         },
       },
+      extensions = { "fzf" }
     })
   end
 }

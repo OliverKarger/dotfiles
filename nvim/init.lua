@@ -28,8 +28,11 @@ require('packer').startup(function(use)
   use 'jiangmiao/auto-pairs'  -- Auto pairs
 
   -- Themes
-  use 'morhetz/gruvbox'      -- Gruvbox colorscheme
-  use 'scottmckendry/cyberdream.nvim' -- Colorscheme
+  use 'morhetz/gruvbox'      -- Gruvbox Theme
+  use 'scottmckendry/cyberdream.nvim' -- Cyberdream Theme
+  use 'olimorris/onedarkpro.nvim' -- One Dark Pro Theme
+  use 'alexvzyl/nordic.nvim' -- Nordic Theme
+  use 'bluz71/vim-moonfly-colors' -- Moonfly Colors Theme
 
   -- File Browser
   use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
@@ -61,6 +64,7 @@ require('packer').startup(function(use)
   use 'junegunn/fzf.vim'
   use 'nvim-pack/nvim-spectre' -- Search ad Replace Tool 
   use 'stevearc/overseer.nvim' -- Task Management
+  use 'zaldih/themery.nvim' -- Theme Management
 
 end)
 
@@ -71,6 +75,7 @@ settings.settings()
 vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
+-- Load Files
 utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
 
 -- Task Management
