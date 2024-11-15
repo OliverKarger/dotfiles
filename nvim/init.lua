@@ -16,6 +16,10 @@ ensure_packer()
 
 -- Packer setup
 require('packer').startup(function(use)
+
+  -- Common Utilities
+  -- File Browser
+
   use 'wbthomason/packer.nvim'  -- Packer manages itself
   use 'sheerun/vim-polyglot'  -- Language support
   use 'jiangmiao/auto-pairs'  -- Auto pairs
