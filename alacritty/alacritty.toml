@@ -19,5 +19,5 @@ padding = { x = 0, y = 0 }
 columns = 120
 lines = 50
 
-[general]
-import = ["/home/olli/.config/alacritty/themes/cyberdream.toml"]
+# [general]
+# import = ["/home/olli/.config/alacritty/themes/cyberdream.toml"]

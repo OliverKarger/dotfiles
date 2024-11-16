@@ -79,7 +79,7 @@ vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
 -- Load Files
-utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
+utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug' } )
 
 -- Task Management
 utils.safe_require('overseer').setup()

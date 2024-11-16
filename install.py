@@ -29,6 +29,7 @@ CONFIGS = {
             "lua/mason_config.lua",
             "lua/lsp_config.lua",
             "lua/dap_config.lua",
+            "lua/dotnet_debug.lua",
             "init.lua" 
         ],
         "target": {
