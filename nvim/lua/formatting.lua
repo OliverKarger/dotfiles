@@ -1,7 +1,9 @@
 local utils = require('utils')
 
-return {
-  setup = function()
-    utils.safe_require('formatter').setup()
-  end
-}
+local _M = {}
+
+_M.setup = function()
+  utils.safe_require('formatter').setup()
+end
+
+return _M

@@ -43,7 +43,7 @@ return {
     lua_ls = {
       Lua = {
         diagnostics = {
-          globals = { 'vim' }
+          globals = { 'vim', 'jit' }
         }
       }
     }

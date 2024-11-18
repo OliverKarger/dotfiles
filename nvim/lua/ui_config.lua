@@ -1,62 +1,158 @@
 local utils = require('utils')
 
-return {
-  setup = function()
-    local ui = utils.safe_require('dressing')
+local _M = {}
 
-    ui.setup({
-      input = {
-        -- Set to false to disable the vim.ui.input implementation
-        enabled = true,
+_M.setup = function()
+  local ui = utils.safe_require('dressing')
 
-        -- Default prompt string
-        default_prompt = "Input",
+  ui.setup({
+    input = {
+      -- Set to false to disable the vim.ui.input implementation
+      enabled = true,
 
-        -- Trim trailing `:` from prompt
-        trim_prompt = true,
+      -- Default prompt string
+      default_prompt = "Input",
 
-        -- Can be 'left', 'right', or 'center'
-        title_pos = "left",
+      -- Trim trailing `:` from prompt
+      trim_prompt = true,
 
-        -- The initial mode when the window opens (insert|normal|visual|select).
-        start_mode = "insert",
+      -- Can be 'left', 'right', or 'center'
+      title_pos = "left",
 
+      -- The initial mode when the window opens (insert|normal|visual|select).
+      start_mode = "insert",
+
+      -- These are passed to nvim_open_win
+      border = "rounded",
+      -- 'editor' and 'win' will default to being centered
+      relative = "cursor",
+
+      -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      prefer_width = 40,
+      width = nil,
+      -- min_width and max_width can be a list of mixed types.
+      -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
+      max_width = { 140, 0.9 },
+      min_width = { 20, 0.2 },
+
+      buf_options = {},
+      win_options = {
+        -- Disable line wrapping
+        wrap = false,
+        -- Indicator for when text exceeds window
+        list = true,
+        listchars = "precedes:…,extends:…",
+        -- Increase this for more context when text scrolls off the window
+        sidescrolloff = 0,
+      },
+
+      -- Set to `false` to disable
+      mappings = {
+        n = {
+          ["<Esc>"] = "Close",
+          ["<CR>"] = "Confirm",
+        },
+        i = {
+          ["<C-c>"] = "Close",
+          ["<CR>"] = "Confirm",
+          ["<Up>"] = "HistoryPrev",
+          ["<Down>"] = "HistoryNext",
+        },
+      },
+
+      override = function(conf)
+        -- This is the config that will be passed to nvim_open_win.
+        -- Change values here to customize the layout
+        return conf
+      end,
+
+      -- see :help dressing_get_config
+      get_config = nil,
+    },
+    select = {
+      -- Set to false to disable the vim.ui.select implementation
+      enabled = true,
+
+      -- Priority list of preferred vim.select implementations
+      backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+
+      -- Trim trailing `:` from prompt
+      trim_prompt = true,
+
+      -- Options for telescope selector
+      -- These are passed into the telescope picker directly. Can be used like:
+      -- telescope = require('telescope.themes').get_ivy({...})
+      telescope = nil,
+
+      -- Options for fzf selector
+      fzf = {
+        window = {
+          width = 0.5,
+          height = 0.4,
+        },
+      },
+
+      -- Options for fzf-lua
+      fzf_lua = {
+        -- winopts = {
+        --   height = 0.5,
+        --   width = 0.5,
+        -- },
+      },
+
+      -- Options for nui Menu
+      nui = {
+        position = "50%",
+        size = nil,
+        relative = "editor",
+        border = {
+          style = "rounded",
+        },
+        buf_options = {
+          swapfile = false,
+          filetype = "DressingSelect",
+        },
+        win_options = {
+          winblend = 0,
+        },
+        max_width = 80,
+        max_height = 40,
+        min_width = 40,
+        min_height = 10,
+      },
+
+      -- Options for built-in selector
+      builtin = {
+        -- Display numbers for options and set up keymaps
+        show_numbers = true,
         -- These are passed to nvim_open_win
         border = "rounded",
         -- 'editor' and 'win' will default to being centered
-        relative = "cursor",
-
-        -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-        prefer_width = 40,
-        width = nil,
-        -- min_width and max_width can be a list of mixed types.
-        -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
-        max_width = { 140, 0.9 },
-        min_width = { 20, 0.2 },
+        relative = "editor",
 
         buf_options = {},
         win_options = {
-          -- Disable line wrapping
-          wrap = false,
-          -- Indicator for when text exceeds window
-          list = true,
-          listchars = "precedes:…,extends:…",
-          -- Increase this for more context when text scrolls off the window
-          sidescrolloff = 0,
+          cursorline = true,
+          cursorlineopt = "both",
+          -- disable highlighting for the brackets around the numbers
+          winhighlight = "MatchParen:",
         },
+
+        -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+        -- the min_ and max_ options can be a list of mixed types.
+        -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
+        width = nil,
+        max_width = { 140, 0.8 },
+        min_width = { 40, 0.2 },
+        height = nil,
+        max_height = 0.9,
+        min_height = { 10, 0.2 },
 
         -- Set to `false` to disable
         mappings = {
-          n = {
-            ["<Esc>"] = "Close",
-            ["<CR>"] = "Confirm",
-          },
-          i = {
-            ["<C-c>"] = "Close",
-            ["<CR>"] = "Confirm",
-            ["<Up>"] = "HistoryPrev",
-            ["<Down>"] = "HistoryNext",
-          },
+          ["<Esc>"] = "Close",
+          ["<C-c>"] = "Close",
+          ["<CR>"] = "Confirm",
         },
 
         override = function(conf)
@@ -64,182 +160,88 @@ return {
           -- Change values here to customize the layout
           return conf
         end,
-
-        -- see :help dressing_get_config
-        get_config = nil,
       },
-      select = {
-        -- Set to false to disable the vim.ui.select implementation
-        enabled = true,
 
-        -- Priority list of preferred vim.select implementations
-        backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+      -- Used to override format_item. See :help dressing-format
+      format_item_override = {},
 
-        -- Trim trailing `:` from prompt
-        trim_prompt = true,
+      -- see :help dressing_get_config
+      get_config = nil,
+    },
+  })
 
-        -- Options for telescope selector
-        -- These are passed into the telescope picker directly. Can be used like:
-        -- telescope = require('telescope.themes').get_ivy({...})
-        telescope = nil,
+  utils.safe_require('gruvbox').setup({
+    terminal_colors = true, -- add neovim terminal colors
+    undercurl = true,
+    underline = true,
+    bold = true,
+    italic = {
+      strings = true,
+      emphasis = true,
+      comments = true,
+      operators = false,
+      folds = true,
+    },
+    strikethrough = true,
+    palette_overrides = {},
+    overrides = {},
+    dim_inactive = false,
+    transparent_mode = true
+  })
+  utils.safe_require('cyberdream').setup({
+    transparent = true,
+    italic_comments = true,
+    borderless_telescope = true,
+    terminal_colors = true
+  })
+  utils.safe_require('nordic').setup({
+    bold_keyswords = true,
+    italic_comments = true,
+    bright_border = true,
+    reduced_blue = false
+  })
+  utils.safe_require('fluoromachine').setup({
+    glow = true,
+    theme = 'retrowave',
+    transparent = true
+  })
 
-        -- Options for fzf selector
-        fzf = {
-          window = {
-            width = 0.5,
-            height = 0.4,
-          },
-        },
-
-        -- Options for fzf-lua
-        fzf_lua = {
-          -- winopts = {
-          --   height = 0.5,
-          --   width = 0.5,
-          -- },
-        },
-
-        -- Options for nui Menu
-        nui = {
-          position = "50%",
-          size = nil,
-          relative = "editor",
-          border = {
-            style = "rounded",
-          },
-          buf_options = {
-            swapfile = false,
-            filetype = "DressingSelect",
-          },
-          win_options = {
-            winblend = 0,
-          },
-          max_width = 80,
-          max_height = 40,
-          min_width = 40,
-          min_height = 10,
-        },
-
-        -- Options for built-in selector
-        builtin = {
-          -- Display numbers for options and set up keymaps
-          show_numbers = true,
-          -- These are passed to nvim_open_win
-          border = "rounded",
-          -- 'editor' and 'win' will default to being centered
-          relative = "editor",
-
-          buf_options = {},
-          win_options = {
-            cursorline = true,
-            cursorlineopt = "both",
-            -- disable highlighting for the brackets around the numbers
-            winhighlight = "MatchParen:",
-          },
-
-          -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-          -- the min_ and max_ options can be a list of mixed types.
-          -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
-          width = nil,
-          max_width = { 140, 0.8 },
-          min_width = { 40, 0.2 },
-          height = nil,
-          max_height = 0.9,
-          min_height = { 10, 0.2 },
-
-          -- Set to `false` to disable
-          mappings = {
-            ["<Esc>"] = "Close",
-            ["<C-c>"] = "Close",
-            ["<CR>"] = "Confirm",
-          },
-
-          override = function(conf)
-            -- This is the config that will be passed to nvim_open_win.
-            -- Change values here to customize the layout
-            return conf
-          end,
-        },
-
-        -- Used to override format_item. See :help dressing-format
-        format_item_override = {},
-
-        -- see :help dressing_get_config
-        get_config = nil,
+  local themery = utils.safe_require('themery')
+  themery.setup({
+    themes = {
+      {
+        name = 'Gruvbox',
+        colorscheme = 'gruvbox'
       },
-    })
-
-    utils.safe_require('gruvbox').setup({
-      terminal_colors = true, -- add neovim terminal colors
-      undercurl = true,
-      underline = true,
-      bold = true,
-      italic = {
-        strings = true,
-        emphasis = true,
-        comments = true,
-        operators = false,
-        folds = true,
+      {
+        name = 'Cyberdream',
+        colorscheme = 'cyberdream'
       },
-      strikethrough = true,
-      palette_overrides = {},
-      overrides = {},
-      dim_inactive = false,
-      transparent_mode = true
-    })
-    utils.safe_require('cyberdream').setup({
-      transparent = true,
-      italic_comments = true,
-      borderless_telescope = true,
-      terminal_colors = true
-    })
-    utils.safe_require('nordic').setup({
-      bold_keyswords = true,
-      italic_comments = true,
-      bright_border = true,
-      reduced_blue = false
-    })
-    utils.safe_require('fluoromachine').setup({
-      glow = true,
-      theme = 'retrowave',
-      transparent = true
-    })
-
-    local themery = utils.safe_require('themery')
-    themery.setup({
-      themes = {
-        {
-          name = 'Gruvbox',
-          colorscheme = 'gruvbox'
-        },
-        {
-          name = 'Cyberdream',
-          colorscheme = 'cyberdream'
-        },
-        {
-          name = 'Moonfly',
-          colorscheme = 'moonfly'
-        },
-        {
-          name = 'Nordic',
-          colorscheme = 'nordic'
-        },
-        {
-          name = 'Fluoromachine',
-          colorscheme = 'fluoromachine'
-        },
-        {
-          name = 'Everforest Dark',
-          colorscheme = 'everforest',
-          before = [[
-            vim.g.background = "dark"
-            vim.g.everforest_better_performance = true
-            vim.g.everforest_enabled_italic = true
-            vim.g.everforest_transparent_background = true
-          ]]
-        }
+      {
+        name = 'Moonfly',
+        colorscheme = 'moonfly'
       },
-      livePreview = true
-    })
-  end
-}
+      {
+        name = 'Nordic',
+        colorscheme = 'nordic'
+      },
+      {
+        name = 'Fluoromachine',
+        colorscheme = 'fluoromachine'
+      },
+      {
+        name = 'Everforest Dark',
+        colorscheme = 'everforest',
+        before = [[
+          vim.g.background = "dark"
+          vim.g.everforest_better_performance = true
+          vim.g.everforest_enabled_italic = true
+          vim.g.everforest_transparent_background = true
+        ]]
+      }
+    },
+    livePreview = true
+  })
+end
+
+return _M

@@ -44,10 +44,14 @@ _M.get_attached_lsp = function()
 end
 
 _M.is_windows = function()
-  if not vim.fn.has('macunix') then
-    return false
-  else
+  if jit then
+    return jit.os
+  end
+  local _, err = assert(io.popen("uname -o 2>/dev/null", "r"))
+  if err then
     return true
+  else
+    return false
   end
 end
 

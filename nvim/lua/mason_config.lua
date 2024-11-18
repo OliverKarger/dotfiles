@@ -1,16 +1,18 @@
 local utils = require('utils')
 
-return {
-  setup = function()
-    local mason = utils.safe_require('mason')
-    mason.setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-          }
+local _M = {}
+
+_M.setup = function()
+  local mason = utils.safe_require('mason')
+  mason.setup({
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
         }
-      })
-  end
-}
+      }
+    })
+end
+
+return _M
