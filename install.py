@@ -30,6 +30,8 @@ CONFIGS = {
             "lua/lsp_config.lua",
             "lua/dap_config.lua",
             "lua/dotnet_debug.lua",
+            "lua/tasks.lua",
+            "lua/formatting.lua",
             "init.lua" 
         ],
         "target": {
@@ -196,4 +198,7 @@ def main():
             os.system(pic)
     
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        exit()

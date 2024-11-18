@@ -79,11 +79,7 @@ vim.cmd('colorscheme cyberdream')
 vim.o.background = 'dark'
 
 -- Load Files
-utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug' } )
-
--- Task Management
-utils.safe_require('overseer').setup()
-vim.api.nvim_set_keymap('n', '<C-R>', ':OverseerRun<CR>', settings.keymap_opts)
+utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug', 'tasks', 'formatting' } )
 
 -- Formatter Configuration
 utils.safe_require('formatter').setup()
