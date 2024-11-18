@@ -169,8 +169,37 @@ return {
       },
     })
 
-    local fluoromachine = utils.safe_require('fluoromachine')
-    fluoromachine.setup({
+    utils.safe_require('gruvbox').setup({
+      terminal_colors = true, -- add neovim terminal colors
+      undercurl = true,
+      underline = true,
+      bold = true,
+      italic = {
+        strings = true,
+        emphasis = true,
+        comments = true,
+        operators = false,
+        folds = true,
+      },
+      strikethrough = true,
+      palette_overrides = {},
+      overrides = {},
+      dim_inactive = false,
+      transparent_mode = true
+    })
+    utils.safe_require('cyberdream').setup({
+      transparent = true,
+      italic_comments = true,
+      borderless_telescope = true,
+      terminal_colors = true
+    })
+    utils.safe_require('nordic').setup({
+      bold_keyswords = true,
+      italic_comments = true,
+      bright_border = true,
+      reduced_blue = false
+    })
+    utils.safe_require('fluoromachine').setup({
       glow = true,
       theme = 'retrowave',
       transparent = true
@@ -178,7 +207,38 @@ return {
 
     local themery = utils.safe_require('themery')
     themery.setup({
-      themes = { 'gruvbox', 'cyberdream', 'moonfly', 'nordic', 'fluoromachine' },
+      themes = {
+        {
+          name = 'Gruvbox',
+          colorscheme = 'gruvbox'
+        },
+        {
+          name = 'Cyberdream',
+          colorscheme = 'cyberdream'
+        },
+        {
+          name = 'Moonfly',
+          colorscheme = 'moonfly'
+        },
+        {
+          name = 'Nordic',
+          colorscheme = 'nordic'
+        },
+        {
+          name = 'Fluoromachine',
+          colorscheme = 'fluoromachine'
+        },
+        {
+          name = 'Everforest Dark',
+          colorscheme = 'everforest',
+          before = [[
+            vim.g.background = "dark"
+            vim.g.everforest_better_performance = true
+            vim.g.everforest_enabled_italic = true
+            vim.g.everforest_transparent_background = true
+          ]]
+        }
+      },
       livePreview = true
     })
   end

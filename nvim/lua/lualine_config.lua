@@ -13,7 +13,7 @@ return {
         icons_enabled = true,
         theme = 'auto',
         component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         always_divide_middle = true,
         always_show_tabline = true,
         globalstatus = true,
@@ -35,10 +35,9 @@ return {
             end
           }
         },
-        -- lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
-        lualine_y = { 'progress, location' },
+        lualine_y = { 'progress', 'location' },
         lualine_z = {
           {
             utils.get_current_theme,
@@ -47,7 +46,7 @@ return {
             end
           },
           {
-            utils.get_attached_lsp
+            utils.get_attached_lsp()
           }
         },
       },

@@ -1,4 +1,5 @@
 local utils = require('utils')
+local notify = utils.safe_require('notify')
 
 local function find_executable_for_csproj(csproj_file)
   local csproj_name = vim.fn.fnamemodify(csproj_file, ":t:r")
@@ -28,7 +29,7 @@ local function get_process_id(executable)
   local cmd = string.format("pgrep -f '%s'", executable_name)
   local process_id = vim.fn.system(cmd)
   process_id = process_id:gsub("\n", ""):gsub("^%s*(.-)%s*$", "%1")
-  
+
   if process_id ~= "" then
     return tonumber(process_id)
   else
@@ -46,13 +47,16 @@ return {
   NetDebugSetup = function()
     local dap = utils.safe_require('dap')
     local dap_ui = utils.safe_require('dapui')
-    local notify = utils.safe_require('notify')
 
-    dap.adapters.coreclr = {
-      type = 'executable',
-      command = '/usr/bin/netcoredbg',
-      args = { '--interpreter=vscode' }
-    }
+    if utils.is_windows() then
+      notify('Windows is currently not supported.', 'error', { title='.NET Debugger' })
+    else
+      dap.adapters.coreclr = {
+        type = 'executable',
+        command = '/usr/bin/netcoredbg',
+        args = { '--interpreter=vscode' }
+      }
+    end
 
     local current_dir = vim.fn.getcwd()
     local csproj_files = {}
@@ -96,7 +100,7 @@ return {
           processId = function()
             local process_id = get_process_id(executable)
             if not process_id then
-              notify(string.format("Could not find Process Id for %s", executlabe), "warn", { title = ".NET Debugger" })
+              notify(string.format("Could not find Process Id for %s", executable), "warn", { title = ".NET Debugger" })
               utils.safe_require('dap.utils').pick_process()
             end
             return process_id

@@ -29,12 +29,13 @@ require('packer').startup(function(use)
   use 'MunifTanjim/nui.nvim' -- I don't know and certainly don't care
 
   -- Themes
-  use 'morhetz/gruvbox'      -- Gruvbox Theme
+  use 'ellisonleao/gruvbox.nvim'      -- Gruvbox Theme
   use 'scottmckendry/cyberdream.nvim' -- Cyberdream Theme
   use 'olimorris/onedarkpro.nvim' -- One Dark Pro Theme
   use 'alexvzyl/nordic.nvim' -- Nordic Theme
   use 'bluz71/vim-moonfly-colors' -- Moonfly Colors Theme
   use 'maxmx03/fluoromachine.nvim' -- Synthwave84 x Fluoromachine Theme
+  use 'sainnhe/everforest' -- Everforest Theme
 
   -- File Browser
   use 'nvim-telescope/telescope.nvim' -- File Browser/Explorer
@@ -55,6 +56,7 @@ require('packer').startup(function(use)
   use 'williamboman/mason-lspconfig' -- Mason integration for lspconfig
   use 'mhartington/formatter.nvim' -- Formatter
   use 'mfussenegger/nvim-lint' -- Linter
+  use 'rachartier/tiny-inline-diagnostic.nvim'
 
   -- Debugging and Testing
   use 'mfussenegger/nvim-dap' -- Deubg Adapter
@@ -71,8 +73,8 @@ require('packer').startup(function(use)
 
 end)
 
-settings.keymaps()
-settings.settings()
+settings.set_keymaps()
+settings.set_common()
 
 -- Colorscheme and Background
 vim.cmd('colorscheme cyberdream')

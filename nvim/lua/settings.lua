@@ -1,7 +1,7 @@
 return {
   keymap_opts = { noremap = true, silent = true },
   lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright" },
-  keymaps = function()
+  set_keymaps = function()
     local keymap_opts = { noremap = true, silent = true }
 
     -- Window Navigation Keybindings
@@ -15,7 +15,7 @@ return {
     vim.api.nvim_set_keymap('n', '<C-t>', '<Nop>', keymap_opts)
   end,
 
-  settings = function()
+  set_common = function()
     -- General Neovim Settings
     vim.opt.termguicolors = true       -- Enable true colors
     vim.wo.number = true               -- Show line numbers
@@ -37,5 +37,15 @@ return {
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwSettings = 1
     vim.g.loaded_netrwFileHandlers = 1
-  end
+  end,
+
+  lsp_settings = {
+    lua_ls = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' }
+        }
+      }
+    }
+  }
 }

@@ -7,6 +7,7 @@ return {
     local cmp = utils.safe_require('cmp')
     local mason_lspconfig = utils.safe_require('mason-lspconfig')
     local notify = utils.safe_require('notify')
+    local diag = utils.safe_require('tiny-inline-diagnostic')
 
     mason_lspconfig.setup({
       automatic_installation = true,
@@ -19,8 +20,32 @@ return {
 
     -- LSPConfig Setup
     for _, lsp in ipairs(settings.lsp_servers) do
-      utils.safe_require('lspconfig')[lsp].setup { on_attach = function() on_lsp_attach(lsp) end}
+      local additional_options = {}
+      if settings.lsp_settings[lsp] then
+        additional_options = settings.lsp_settings[lsp]
+      end
+
+      local setup_options = { on_attach = function() on_lsp_attach(lsp) end, settings = additional_options }
+      utils.safe_require('lspconfig')[lsp].setup(setup_options)
     end
+
+    -- Neovim Diagnostics Configuration
+    diag.setup({
+        signs = {
+          left = "",
+          right = "",
+          diag = "●",
+          arrow = "    ",
+          up_arrow = "    ",
+          vertical = " │",
+          vertical_end = " └",
+        },
+        options = {
+          show_soruce = true,
+          multilines = true,
+        }
+    })
+    vim.diagnostic.config({ virtual_text = false })
 
     -- Snippets and Completion Setup
     cmp.setup {
@@ -64,7 +89,52 @@ return {
       },
       completion = {
           autocomplete = { cmp.TriggerEvent.TextChanged }
-      }
-    }
+      },
+      formatting = {
+        format = function(entry, vim_item)
+          local icons = {
+            Text = " ",
+            Method = " ",
+            Function = " ",
+            Constructor = " ",
+            Field = " ",
+            Variable = " ",
+            Class = " ",
+            Interface = " ",
+            Module = " ",
+            Property = " ",
+            Unit = " ",
+            Value = " ",
+            Enum = " ",
+            Keyword = " ",
+            Snippet = " ",
+            Color = " ",
+            File = " ",
+            Reference = " ",
+            Folder = " ",
+            EnumMember = " ",
+            Constant = " ",
+            Struct = " ",
+            Event = " ",
+            Operator = " ",
+            TypeParameter = " ",
+          }
+
+          vim_item.kind = (icons[vim_item.kind] or "") .. vim_item.kind
+
+          local source_names = {
+            nvim_lsp = "[LSP]",
+            luasnip = "[Snippet]",
+            buffer = "[Buffer]",
+            path = "[Path]",
+            nvim_lua = "[Lua]",
+            calc = "[Calc]",
+          }
+
+          vim_item.menu = source_names[entry.source.name] or "[Unknown]"
+
+          return vim_item
+        end,
+    }}
   end
 }
