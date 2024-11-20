@@ -76,10 +76,6 @@ end)
 settings.set_keymaps()
 settings.set_common()
 
--- Colorscheme and Background
-vim.cmd('colorscheme cyberdream')
-vim.o.background = 'dark'
-
 -- Load Files
 utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug', 'tasks', 'formatting' } )
 
