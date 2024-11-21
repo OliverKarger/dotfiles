@@ -1,3 +1,4 @@
+import sys
 import os
 import shutil
 from pathlib import Path
@@ -142,76 +143,93 @@ def check_installed(p):
 def is_windows():
     return os.name == 'nt'
 
-def main():
-    for app in CONFIGS:
-
-        # Ask if it should proceed
+def install(app, headless = False, install_check = False):
+    # Ask if it should proceed
+    if not headless:
         if not prompt_yn(f"Configure {app}"):
-            continue
-        print(f"Configuring {app}")
-        
-        # Check if installed
+            return
+    print(f"Configuring {app}")
+   
+    # Check if installed
+    if install_check:
         if not check_installed(app):
-            continue
-        
-        # Get Platform specific Destination Path
-        # If Target Path for Platform is "", skip for this Platform
-        dst_p = ""
-        if is_windows():
-            if CONFIGS[app]["target"]["windows"] == "@none":
-                print(f" > No Windows Configuration for {app}. Skipping.")
-                continue
-            dst_p = os.path.join(Path.home(), CONFIGS[app]["target"]["windows"])
-        else:
-            if CONFIGS[app]["target"]["unix"] == "@none":
-                print(f" > No Unix-like Configuration for {app}. Skipping.")
-                continue
-            dst_p = os.path.join(Path.home(), CONFIGS[app]["target"]["unix"])
-
-        # Make sure Path exists
-        ensure_path(dst_p)
-
-        # Local Base Path
-        local_base = os.path.join(os.getcwd(), CONFIGS[app]["files_base"])
-        if not os.path.exists(local_base):
-            print(f" - Local Path {local_base} not found")
-            continue
-       
-        # Post Install Commands
-        post_install = []
-        if is_windows():
-            post_install = CONFIGS[app]["post_install"]["windows"]
-        else:
-            post_install = CONFIGS[app]["post_install"]["unix"]
-
-        # Loop over Files
-        for file in CONFIGS[app]["files"]:
-            # Full Local Path
-            full_src_path = os.path.join(local_base, file)
-            full_dst_path = os.path.join(dst_p, file)
-            
-            print(f" + Processing File: {file}")
-
-            ensure_path(full_dst_path)
-
-            try:
-                # Either create a Symlink or Copy Files
-                if CONFIGS[app]["symlinks"]:
-                    create_symlink(full_src_path, full_dst_path)
-                else:
-                    shutil.copyfile(full_src_path, full_dst_path)
-            except PermissionError:
-                print(f" - Permission Error while processing {file}")
-                continue
-
-        if post_install == []:
-            print(f"No Post-Install Commands for {app}. Skipping.")
-            continue
-
-        for pic in post_install:
-            print(f" + Executing Post Install Command: {pic}")
-            os.system(pic)
+            return
     
+    # Get Platform specific Destination Path
+    # If Target Path for Platform is "", skip for this Platform
+    dst_p = ""
+    if is_windows():
+        if CONFIGS[app]["target"]["windows"] == "@none":
+            print(f" > No Windows Configuration for {app}. Skipping.")
+            return
+        dst_p = os.path.join(Path.home(), CONFIGS[app]["target"]["windows"])
+    else:
+        if CONFIGS[app]["target"]["unix"] == "@none":
+            print(f" > No Unix-like Configuration for {app}. Skipping.")
+            return
+        dst_p = os.path.join(Path.home(), CONFIGS[app]["target"]["unix"])
+
+    # Make sure Path exists
+    ensure_path(dst_p)
+
+    # Local Base Path
+    local_base = os.path.join(os.getcwd(), CONFIGS[app]["files_base"])
+    if not os.path.exists(local_base):
+        print(f" - Local Path {local_base} not found")
+        return
+   
+    # Post Install Commands
+    post_install = []
+    if is_windows():
+        post_install = CONFIGS[app]["post_install"]["windows"]
+    else:
+        post_install = CONFIGS[app]["post_install"]["unix"]
+
+    # Loop over Files
+    for file in CONFIGS[app]["files"]:
+        # Full Local Path
+        full_src_path = os.path.join(local_base, file)
+        full_dst_path = os.path.join(dst_p, file)
+        
+        print(f" + Processing File: {file}")
+
+        ensure_path(full_dst_path)
+
+        try:
+            # Either create a Symlink or Copy Files
+            if CONFIGS[app]["symlinks"]:
+                create_symlink(full_src_path, full_dst_path)
+            else:
+                shutil.copyfile(full_src_path, full_dst_path)
+        except PermissionError:
+            print(f" - Permission Error while processing {file}")
+            continue
+
+    if post_install == []:
+        print(f"No Post-Install Commands for {app}. Skipping.")
+        return
+
+    for pic in post_install:
+        print(f" + Executing Post Install Command: {pic}")
+        os.system(pic)
+
+
+def main():
+
+    def interactive():
+        for app in CONFIGS:
+            install(app)
+
+    def headless():
+        for arg in sys.argv:
+            if CONFIGS.__contains__(arg):
+                install(arg, True, False)
+
+    if len(sys.argv) == 1:
+        interactive()
+    else:
+        headless()
+
 if __name__ == "__main__":
     try:
         main()
