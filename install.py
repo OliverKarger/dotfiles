@@ -16,6 +16,21 @@ How this Works:
 """
 
 CONFIGS = {
+    "zsh": {
+        "files_base": ".",
+        "files": [
+            ".zshrc"
+        ],
+        "target": {
+            "windows": "@none",
+            "unix": "."
+        },
+        "symlinks": True,
+        "post_install": {
+            "windows": [],
+            "unix": []
+        }
+    },
     "nvim": {
         "files_base": "nvim/",
         "files": [ 
