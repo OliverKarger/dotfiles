@@ -5,16 +5,12 @@ local _M = {}
 _M.setup = function()
   local lualine = utils.safe_require('lualine')
 
-  local function on_theme_click()
-    vim.cmd(":Themery")
-  end
-
   lualine.setup({
     options = {
       icons_enabled = true,
       theme = 'auto',
       component_separators = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
       always_divide_middle = true,
       always_show_tabline = true,
       globalstatus = true,
@@ -43,7 +39,7 @@ _M.setup = function()
         {
           utils.get_current_theme,
           on_click = function()
-            on_theme_click()
+            vim.cmd(":Themery")
           end
         },
         {

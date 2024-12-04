@@ -21,12 +21,12 @@ _M.setup = function()
 
   -- LSPConfig Setup
   for _, lsp in ipairs(settings.lsp_servers) do
-    local additional_options = {}
+    local lsp_options = {}
     if settings.lsp_settings[lsp] then
-      additional_options = settings.lsp_settings[lsp]
+      lsp_options = settings.lsp_settings[lsp]
     end
 
-    local setup_options = { on_attach = function() on_lsp_attach(lsp) end, settings = additional_options }
+    local setup_options = utils.merge_tables({ on_attach = function() on_lsp_attach(lsp) end }, lsp_options)
     utils.safe_require('lspconfig')[lsp].setup(setup_options)
   end
 

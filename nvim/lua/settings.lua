@@ -5,13 +5,17 @@ return {
     local keymap_opts = { noremap = true, silent = true }
 
     -- Window Navigation Keybindings
-    vim.api.nvim_set_keymap('n', '<C-w><Up>', '<C-w>k', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-w><Down>', '<C-w>j', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-w><Left>', '<C-w>h', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-w><Right>', '<C-w>l', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-w>v', ':vsplit<CR>', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-w>h', ':split<CR>', keymap_opts)
-    vim.api.nvim_set_keymap('n', '<C-w>T', ':term<CR>', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>w<Up>', '<C-w>k', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>w<Down>', '<C-w>j', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>w<Left>', '<C-w>h', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>w<Right>', '<C-w>l', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wl', '<C-w>k', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wd', '<C-w>j', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wl', '<C-w>h', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wr', '<C-w>l', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wsv', ':vsplit<CR>', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wsh', ':split<CR>', keymap_opts)
+    vim.api.nvim_set_keymap('n', '<leader>wst', ':term<CR>', keymap_opts)
     vim.api.nvim_set_keymap('n', '<C-t>', '<Nop>', keymap_opts)
   end,
 
@@ -41,11 +45,16 @@ return {
 
   lsp_settings = {
     lua_ls = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim', 'jit' }
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim', 'jit' }
+          }
         }
       }
+    },
+    clangd = {
+      cmd = { "clangd", "--clang-tidy" }
     }
   }
 }

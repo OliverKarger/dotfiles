@@ -77,7 +77,7 @@ settings.set_keymaps()
 settings.set_common()
 
 -- Load Files
-utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug', 'tasks', 'formatting' } )
+utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug', 'tasks', 'formatting', 'gdb_debug' } )
 
 -- Formatter Configuration
 utils.safe_require('formatter').setup()

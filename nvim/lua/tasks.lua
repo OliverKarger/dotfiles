@@ -5,7 +5,6 @@ local _M = {}
 
 _M.setup = function()
   utils.safe_require('overseer').setup()
-  vim.api.nvim_set_keymap('n', '<C-R>', ':OverseerRun<CR>', settings.keymap_opts)
 end
 
 return _M

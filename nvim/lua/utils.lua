@@ -1,6 +1,6 @@
 local _M = {}
 
-_M.safe_require = function(plugin) 
+_M.safe_require = function(plugin)
   local success, result = pcall(require, plugin)
   if not success then
     local notify_s, notify_r = pcall(require, "notify")
@@ -53,6 +53,47 @@ _M.is_windows = function()
   else
     return false
   end
+end
+
+_M.merge_tables = function(table1, table2)
+
+  local merged = {}
+
+  -- Copy elements from the first table
+  for k, v in pairs(table1) do
+    merged[k] = v
+  end
+
+  -- Copy elements from the second table
+  for k, v in pairs(table2) do
+    merged[k] = v
+  end
+
+  return merged
+
+end
+
+_M.find_cmakelists = function()
+  local results = {}
+
+  -- Recursive function to scan directories
+  local function scan_dir(dir)
+    local handle = vim.loop.fs_scandir(dir)
+    if handle then
+      while true do
+        local name, type = vim.loop.fs_scandir_next(handle)
+        if not name then break end
+        local full_path = dir .. "/" .. name
+        if type == "file" and name == "CMakeLists.txt" then
+          table.insert(results, full_path)
+        elseif type == "directory" then
+          scan_dir(full_path) -- Recurse into subdirectory
+        end
+      end
+    end
+  end
+
+  return results
 end
 
 return _M

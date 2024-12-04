@@ -48,6 +48,7 @@ CONFIGS = {
             "lua/dotnet_debug.lua",
             "lua/tasks.lua",
             "lua/formatting.lua",
+            "lua/gdb_debug.lua",
             "init.lua" 
         ],
         "target": {

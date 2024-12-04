@@ -11,7 +11,7 @@ program = "zsh"
 [window]
 dynamic_padding = true
 dynamic_title = true
-opacity = 0.9
+opacity = 1.0
 startup_mode = "windowed"
 padding = { x = 0, y = 0 }
 
