@@ -100,6 +100,19 @@ CONFIGS = {
             "unix": [ "systemctl restart spacenavd" ]
         }
     },
+    "fancontrol": {
+        "files_base": ".",
+        "files": [ "fancontrol" ],
+        "target": {
+            "windows": "@none",
+            "unix": "/etc"
+        },
+        "symlinks": True,
+        "post_install": {
+            "windows": [],
+            "unix": [ "systemctl restart fancontrol" ]
+        },
+    },
     "neofetch": {
         "files_base": "neofetch/",
         "files": [ "config.conf" ],

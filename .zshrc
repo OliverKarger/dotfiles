@@ -10,7 +10,7 @@ ZSH_THEME="robbyrussell"
 ENABLE_CORRECTION="false"
 
 # Plugins
-plugins=(battery branch colorize git ssh)
+plugins=(battery branch colorize git ssh virtualenv)
 
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
@@ -36,6 +36,11 @@ if [ -n "$XAUTHORITY" ]; then
     rm -f "$HOME/.Xauthority";     
     ln -s $XAUTHORITY "$HOME/.Xauthority";
 fi
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 if [ "$TMUX" = "" ]; then tmux; fi
 neofetch

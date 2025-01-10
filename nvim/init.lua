@@ -25,7 +25,7 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'wbthomason/packer.nvim'  -- Packer manages itself
   use 'sheerun/vim-polyglot'  -- Language support
-  use 'jiangmiao/auto-pairs'  -- Auto pairs
+  -- use 'jiangmiao/auto-pairs'  -- Auto pairs
   use 'MunifTanjim/nui.nvim' -- I don't know and certainly don't care
 
   -- Themes

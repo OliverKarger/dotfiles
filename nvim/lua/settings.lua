@@ -1,6 +1,6 @@
 return {
   keymap_opts = { noremap = true, silent = true },
-  lsp_servers = { "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright" },
+  lsp_servers = { "ansiblels", "ansible-lint", "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright" },
   set_keymaps = function()
     local keymap_opts = { noremap = true, silent = true }
 
@@ -17,6 +17,8 @@ return {
     vim.api.nvim_set_keymap('n', '<leader>wsh', ':split<CR>', keymap_opts)
     vim.api.nvim_set_keymap('n', '<leader>wst', ':term<CR>', keymap_opts)
     vim.api.nvim_set_keymap('n', '<C-t>', '<Nop>', keymap_opts)
+    vim.api.nvim_set_keymap('i', '"', '"', keymap_opts)
+    vim.api.nvim_set_keymap('i', "'", "'", keymap_opts)
   end,
 
   set_common = function()
