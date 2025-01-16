@@ -10,12 +10,19 @@ local ensure_packer = function()
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system([[packeradd packer.nvim]])
   end
 end
 ensure_packer()
 
+local packer_ok, packer = pcall(require, 'packer')
+if not packer_ok then
+  print("Failed to load Packer. Please restart")
+  return
+end
+
 -- Packer setup
-require('packer').startup(function(use)
+packer.startup(function(use)
 
   -- Common Utilities
   use 'nvim-lualine/lualine.nvim' -- Status Line
