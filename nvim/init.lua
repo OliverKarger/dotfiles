@@ -1,9 +1,6 @@
 local utils = require('utils')
 local settings = utils.safe_require('settings')
 
--- Variables
-local vim = vim
-
 -- Ensure Packer is installed
 local ensure_packer = function()
   local fn = vim.fn
@@ -34,6 +31,10 @@ packer.startup(function(use)
   use 'sheerun/vim-polyglot'  -- Language support
   -- use 'jiangmiao/auto-pairs'  -- Auto pairs
   use 'MunifTanjim/nui.nvim' -- I don't know and certainly don't care
+  use {
+    'L3MON4D3/LuaSnip',
+    run = "make install_jsregexp"
+  }
 
   -- Themes
   use 'ellisonleao/gruvbox.nvim'      -- Gruvbox Theme
@@ -88,3 +89,22 @@ utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_
 
 -- Formatter Configuration
 utils.safe_require('formatter').setup()
+
+-- Open Config Command
+vim.api.nvim_create_user_command("OpenConfig", function()
+    local config_path = vim.fn.stdpath("config")
+    vim.cmd("cd " .. config_path)
+end, { bang = true, desc = "Open Neovim Config" })
+
+-- Function to adjust Neovide scale
+local function adjust_neovide_scale(amount)
+  if vim.g.neovide_scale_factor == nil then
+    vim.g.neovide_scale_factor = 1.0
+  end
+  vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + amount
+end
+
+-- Keybindings for zooming
+vim.keymap.set("n", "<C-+>", function() adjust_neovide_scale(0.1) end, { noremap = true, silent = true })
+vim.keymap.set("n", "<C-->", function() adjust_neovide_scale(-0.1) end, { noremap = true, silent = true })
+vim.keymap.set("n", "<C-0>", function() vim.g.neovide_scale_factor = 1.0 end, { noremap = true, silent = true }) -- Reset zoom

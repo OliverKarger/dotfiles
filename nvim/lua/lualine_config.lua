@@ -9,8 +9,8 @@ _M.setup = function()
     options = {
       icons_enabled = true,
       theme = 'auto',
-      component_separators = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
+      component_separators = { left = '', right = '' },
+      section_separators  = { left = '', right = '' },
       always_divide_middle = true,
       always_show_tabline = true,
       globalstatus = true,
@@ -47,7 +47,18 @@ _M.setup = function()
         }
       },
     },
-    extensions = { "fzf" }
+    extensions = { "fzf" },
+    tabline = {
+      lualine_a = {
+        {
+          'tabs',
+          mode = 2,
+           max_length = vim.o.columns,
+          show_filename_only = true,
+          show_modified_status = true
+        }
+      }
+    }
   })
 end
 

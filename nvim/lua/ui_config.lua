@@ -186,7 +186,7 @@ _M.setup = function()
     palette_overrides = {},
     overrides = {},
     dim_inactive = false,
-    transparent_mode = true
+    transparent_mode = false
   })
   utils.safe_require('cyberdream').setup({
     transparent = true,
@@ -210,24 +210,46 @@ _M.setup = function()
   themery.setup({
     themes = {
       {
-        name = 'Gruvbox',
-        colorscheme = 'gruvbox'
+        name = 'Gruvbox Light',
+        colorscheme = 'gruvbox',
+        before = [[
+          vim.o.background = "light"
+        ]]
+      },
+      {
+        name = 'Gruvbox Dark',
+        colorscheme = 'gruvbox',
+        before = [[
+          vim.o.background = "dark"
+        ]]
       },
       {
         name = 'Cyberdream',
-        colorscheme = 'cyberdream'
+        colorscheme = 'cyberdream',
+        before = [[
+          vim.o.background = "dark"
+        ]]
       },
       {
         name = 'Moonfly',
-        colorscheme = 'moonfly'
+        colorscheme = 'moonfly',
+        before = [[
+          vim.o.background = "dark"
+        ]]
       },
       {
         name = 'Nordic',
-        colorscheme = 'nordic'
+        colorscheme = 'nordic',
+        before = [[
+          vim.o.background = "dark"
+        ]]
       },
       {
         name = 'Fluoromachine',
-        colorscheme = 'fluoromachine'
+        colorscheme = 'fluoromachine',
+        before = [[
+          vim.o.background = "dark"
+        ]]
       },
       {
         name = 'Everforest Dark',
@@ -236,7 +258,7 @@ _M.setup = function()
           vim.g.background = "dark"
           vim.g.everforest_better_performance = true
           vim.g.everforest_enabled_italic = true
-          vim.g.everforest_transparent_background = true
+          vim.g.everforest_transparent_background = false
         ]]
       }
     },

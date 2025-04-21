@@ -29,9 +29,6 @@ _M.setup = function()
   }
 
   telescope.load_extension("ui-select")
-
-  vim.api.nvim_set_keymap('n', '<leader>fe', ':Telescope file_browser<CR>', settings.keymap_opts)
-  vim.api.nvim_set_keymap('n', '<leader>fs', ':Telescope find_files<CR>', settings.keymap_opts)
 end
 
 return _M

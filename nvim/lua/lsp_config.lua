@@ -60,7 +60,7 @@ _M.setup = function()
       ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Scroll down
       ['<C-Space>'] = cmp.mapping.complete(),  -- Trigger completion
       ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
+        behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
       ['<Tab>'] = cmp.mapping(function(fallback)
@@ -83,10 +83,13 @@ _M.setup = function()
       end, { 'i', 's' }),
     }),
     sources = {
+      { name = 'path' },
       { name = 'nvim_lsp' },
-      { name = 'luasnip' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'nvim_lua' },
       { name = 'buffer' },
-      { name = 'path' }
+      { name = 'luasnip' },
+      { name = 'calc' }
     },
     completion = {
         autocomplete = { cmp.TriggerEvent.TextChanged }
