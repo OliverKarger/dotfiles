@@ -1,16 +1,18 @@
 local utils = require('utils')
 
-local _M = {}
+local Module = {}
 
-_M.setup = function()
-  local lualine = utils.safe_require('lualine')
+Module.Setup = function()
+  local lualine = utils.SafeRequire('lualine')
 
   lualine.setup({
     options = {
       icons_enabled = true,
       theme = 'auto',
-      component_separators = { left = '', right = '' },
-      section_separators  = { left = '', right = '' },
+      component_separators = { left = '', right = '' },
+      section_separators  = { left = '', right = '' },
+      -- component_separators = { left = '', right = '' },
+      -- section_separators  = { left = '', right = '' },
       always_divide_middle = true,
       always_show_tabline = true,
       globalstatus = true,
@@ -37,13 +39,13 @@ _M.setup = function()
       lualine_y = { 'progress', 'location' },
       lualine_z = {
         {
-          utils.get_current_theme,
+          utils.GetCurrentTheme,
           on_click = function()
             vim.cmd(":Themery")
           end
         },
         {
-          utils.get_attached_lsp()
+          utils.GetAttachedLSP
         }
       },
     },
@@ -62,4 +64,4 @@ _M.setup = function()
   })
 end
 
-return _M
+return Module

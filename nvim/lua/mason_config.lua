@@ -1,9 +1,9 @@
 local utils = require('utils')
 
-local _M = {}
+local Module = {}
 
-_M.setup = function()
-  local mason = utils.safe_require('mason')
+Module.Setup = function()
+  local mason = utils.SafeRequire('mason')
   mason.setup({
       ui = {
         icons = {
@@ -15,4 +15,4 @@ _M.setup = function()
     })
 end
 
-return _M
+return Module

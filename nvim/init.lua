@@ -1,5 +1,5 @@
 local utils = require('utils')
-local settings = utils.safe_require('settings')
+local settings = utils.SafeRequire('settings')
 
 -- Ensure Packer is installed
 local ensure_packer = function()
@@ -81,14 +81,14 @@ packer.startup(function(use)
 
 end)
 
-settings.set_keymaps()
-settings.set_common()
+settings.ApplyKeymap()
+settings.ApplyVimSettings()
 
 -- Load Files
-utils.load_files( { 'lualine_config', 'ui_config', 'spectre_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config', 'dotnet_debug', 'tasks', 'formatting', 'gdb_debug' } )
+utils.LoadFiles( { 'lualine_config', 'ui_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
 
 -- Formatter Configuration
-utils.safe_require('formatter').setup()
+utils.SafeRequire('formatter').setup()
 
 -- Open Config Command
 vim.api.nvim_create_user_command("OpenConfig", function()

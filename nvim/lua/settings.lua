@@ -1,47 +1,49 @@
-local _M = {}
+local Module = {}
 
-_M.keymap_opts = { noremap = true, silent = true }
-_M.lsp_servers = { "ansiblels", "ansible-lint", "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright", "rust-analyzer", "codelldb" }
-_M.set_keymaps = function()
-  local keymap_opts = { noremap = true, silent = true }
-  local map = vim.api.nvim_set_keymap
+Module.KeymapOptions = { noremap = true, silent = true }
 
+Module.LSPServers = { "ansiblels", "ansible-lint", "clangd", "omnisharp", "lua_ls", "bashls", "docker_compose_language_service", "pyright", "rust-analyzer", "codelldb" }
+
+Module.ApplyKeymap = function()
+  local map = vim.keymap.set
+  local nmap = vim.api.nvim_set_keymap
+  
   -- Unbind
-  map('n', '<C-t>', '<Nop>', keymap_opts)
-  map('i', '"', '"', keymap_opts)
-  map('i', "'", "'", keymap_opts)
+  map('n', '<C-t>', '<Nop>', Module.KeymapOptions)
+  map('i', '"', '"', Module.KeymapOptions)
+  map('i', "'", "'", Module.KeymapOptions)
 
   -- Window Navigation Keybindings
-  map('n', '<leader>wu', '<C-w>k', keymap_opts)
-  map('n', '<leader>wd', '<C-w>j', keymap_opts)
-  map('n', '<leader>wl', '<C-w>h', keymap_opts)
-  map('n', '<leader>wr', '<C-w>l', keymap_opts)
-  map('n', '<leader>wv', ':vsplit<CR>', keymap_opts)
-  map('n', '<leader>wh', ':split<CR>', keymap_opts)
-  map('n', '<leader>wt', ':term<CR>', keymap_opts)
+  map('n', '<leader>wu', '<C-w>k', Module.KeymapOptions)
+  map('n', '<leader>wd', '<C-w>j', Module.KeymapOptions)
+  map('n', '<leader>wl', '<C-w>h', Module.KeymapOptions)
+  map('n', '<leader>wr', '<C-w>l', Module.KeymapOptions)
+  map('n', '<leader>wv', ':vsplit<CR>', Module.KeymapOptions)
+  map('n', '<leader>wh', ':split<CR>', Module.KeymapOptions)
+  map('n', '<leader>wt', ':term<CR>', Module.KeymapOptions)
 
   -- Tabs
-  map('n', '<leader>tn', ':tabnew<CR>', keymap_opts)
-  map('n', '<leader>tc', ':tabclose<CR>', keymap_opts)
+  map('n', '<leader>tn', ':tabnew<CR>', Module.KeymapOptions)
+  map('n', '<leader>tc', ':tabclose<CR>', Module.KeymapOptions)
   for i = 1, 8 do -- map <leader>t1-8 to tabs 1-8
-    map('n', '<leader>t' .. i, i .. 'gt', keymap_opts)
+    map('n', '<leader>t' .. i, i .. 'gt', Module.KeymapOptions)
   end
 
   -- Telescope Keymaps 
-  map('n', '<leader>ff', ':Telescope find_files<CR>', _M.keymap_opts)
-  map('n', '<leader>fe', ':Telescope file_browser<CR>', _M.keymap_opts)
-  map('n', '<leader>fg', ':Telescope live_grep<CR>', _M.keymap_opts)
-  map('n', '<leader>fh', ':Telescope help_tags<CR>', _M.keymap_opts)
+  map('n', '<leader>ff', ':Telescope find_files<CR>', Module.KeymapOptions)
+  map('n', '<leader>fe', ':Telescope file_browser<CR>', Module.KeymapOptions)
+  map('n', '<leader>fg', ':Telescope live_grep<CR>', Module.KeymapOptions)
+  map('n', '<leader>fh', ':Telescope help_tags<CR>', Module.KeymapOptions)
 
   -- Spectre
-  map('n', '<leader>st', '<cmd>lua require("spectre").toggle()<CR>', _M.keymap_opts)
-  map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', _M.keymap_opts)
-  map('n', '<leader>sf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', _M.keymap_opts)
+  map('n', '<leader>st', '<cmd>lua require("spectre").toggle()<CR>', Module.KeymapOptions)
+  map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', Module.KeymapOptions)
+  map('n', '<leader>sf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', Module.KeymapOptions)
 
   -- Debug Adapter
 end
 
-_M.set_common = function()
+Module.ApplyVimSettings = function()
   -- General Neovim Settings
   vim.opt.termguicolors = true       -- Enable true colors
   vim.wo.number = true               -- Show line numbers
@@ -70,7 +72,7 @@ _M.set_common = function()
   vim.g.loaded_netrwFileHandlers = 1
 end
 
-_M.lsp_settings = {
+Module.LSPSettings = {
   lua_ls = {
     settings = {
       Lua = {
@@ -82,7 +84,20 @@ _M.lsp_settings = {
   },
   clangd = {
     cmd = { "clangd", "--clang-tidy" }
+  },
+  omnisharp = {
+    cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+    enable_import_completion = true,
+    organize_imports_on_format = true,
+    enable_roslyn_analyzers = true,
+    settings = {
+      omnisharp = {
+        useModernNet = true, -- uses dotnet CLI and respects SDK-style projects
+        enableEditorConfigSupport = true,
+        enableImportCompletion = true,
+      }
+    }
   }
 }
 
-return _M
+return Module

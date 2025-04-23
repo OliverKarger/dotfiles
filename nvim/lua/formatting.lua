@@ -1,9 +1,9 @@
 local utils = require('utils')
 
-local _M = {}
+local Module = {}
 
-_M.setup = function()
+Module.Setup = function()
   utils.safe_require('formatter').setup()
 end
 
-return _M
+return Module

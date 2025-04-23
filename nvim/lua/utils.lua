@@ -1,11 +1,11 @@
-local _M = {}
+local Module = {}
 
-_M.safe_require = function(plugin)
+Module.SafeRequire = function(plugin)
   local success, result = pcall(require, plugin)
   if not success then
     local notify_s, notify_r = pcall(require, "notify")
       if not notify_s then
-        print("Plugin Error: " .. plugin)
+        print("Lua Error: " .. plugin)
       else
         notify_r(string.format('%s - Lua Error: %s', plugin, result), "error", { title = "Safe Require" })
       end
@@ -13,14 +13,14 @@ _M.safe_require = function(plugin)
   return result
 end
 
-_M.load_files = function(files)
+Module.LoadFiles = function(files)
   local notify = require("notify")
   local has_error = false
 
   for i = 1, #files do
-    local f = _M.safe_require(files[i])
-    if f and not pcall(function() f.setup() end) then
-      notify("Error while Loading File: " .. files[i], "error", { title = 'Lua Loader' })
+    local f = Module.SafeRequire(files[i])
+    if f and not pcall(function() f.Setup() end) then
+      notify("Error while Loading File: " .. files[i], "error", { title = 'Lua Error: ' .. files[i] })
       has_error = true
     end
   end
@@ -30,11 +30,11 @@ _M.load_files = function(files)
   end
 end
 
-_M.get_current_theme = function()
+Module.GetCurrentTheme = function()
   return vim.g.colors_name
 end
 
-_M.get_attached_lsp = function()
+Module.GetAttachedLSP = function()
   local clients = vim.lsp.get_active_clients()
   if #clients == 0 then
     return 'No LSP'
@@ -43,19 +43,19 @@ _M.get_attached_lsp = function()
   return clients[1].name
 end
 
-_M.is_windows = function()
+Module.GetOSPlatform = function()
   if jit then
     return jit.os
   end
   local _, err = assert(io.popen("uname -o 2>/dev/null", "r"))
   if err then
-    return true
+    return 'Windows'
   else
-    return false
+    return 'Other'
   end
 end
 
-_M.merge_tables = function(table1, table2)
+Module.MergeTables = function(table1, table2)
 
   local merged = {}
 
@@ -73,27 +73,35 @@ _M.merge_tables = function(table1, table2)
 
 end
 
-_M.find_cmakelists = function()
-  local results = {}
+Module.ShortcutMenu = function(prompt, list, callback)
+  local telescope_actions = Module.SafeRequire('telescope.actions')
+  local telescope_pickers = Module.SafeRequire('telescope.pickers')
+  local telescope_finders = Module.SafeRequire('telescope.finders')
+  local telescope_conf = Module.SafeRequire('telescope.config').values
+  local telescope_state = Module.SafeRequire('telescope.actions.state')
 
-  -- Recursive function to scan directories
-  local function scan_dir(dir)
-    local handle = vim.loop.fs_scandir(dir)
-    if handle then
-      while true do
-        local name, type = vim.loop.fs_scandir_next(handle)
-        if not name then break end
-        local full_path = dir .. "/" .. name
-        if type == "file" and name == "CMakeLists.txt" then
-          table.insert(results, full_path)
-        elseif type == "directory" then
-          scan_dir(full_path) -- Recurse into subdirectory
-        end
-      end
-    end
-  end
-
-  return results
+  telescope_pickers.new({}, {
+    prompt_title = prompt,
+    finder = telescope_finders.new_table {
+      results = list,
+      entry_maker = function(entry)
+        return {
+          value = entry,
+          display = entry.desc,
+          ordinal = entry.desc,
+        }
+      end,
+    },
+    sorter = telescope_conf.generic_sorter({}),
+    attach_mappings = function(prompt_bufnr, map)
+      telescope_actions.select_default:replace(function()
+        telescope_actions.close(prompt_bufnr)
+        local selection = telescope_state.get_selected_entry()
+        callback(selection.value)
+      end)
+      return true
+    end,
+  }):find()
 end
 
-return _M
+return Module

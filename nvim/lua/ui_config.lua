@@ -1,9 +1,9 @@
 local utils = require('utils')
 
-local _M = {}
+local Module = {}
 
-_M.setup = function()
-  local ui = utils.safe_require('dressing')
+Module.Setup = function()
+  local ui = utils.SafeRequire('dressing')
 
   ui.setup({
     input = {
@@ -20,7 +20,7 @@ _M.setup = function()
       title_pos = "left",
 
       -- The initial mode when the window opens (insert|normal|visual|select).
-      start_mode = "insert",
+      startMode = "insert",
 
       -- These are passed to nvim_open_win
       border = "rounded",
@@ -170,7 +170,7 @@ _M.setup = function()
     },
   })
 
-  utils.safe_require('gruvbox').setup({
+  utils.SafeRequire('gruvbox').setup({
     terminal_colors = true, -- add neovim terminal colors
     undercurl = true,
     underline = true,
@@ -186,29 +186,50 @@ _M.setup = function()
     palette_overrides = {},
     overrides = {},
     dim_inactive = false,
-    transparent_mode = false
+    transparentMode = false
   })
-  utils.safe_require('cyberdream').setup({
+  utils.SafeRequire('cyberdream').setup({
     transparent = true,
     italic_comments = true,
     borderless_telescope = true,
     terminal_colors = true
   })
-  utils.safe_require('nordic').setup({
+  utils.SafeRequire('nordic').setup({
     bold_keyswords = true,
     italic_comments = true,
     bright_border = true,
     reduced_blue = false
   })
-  utils.safe_require('fluoromachine').setup({
+  utils.SafeRequire('fluoromachine').setup({
     glow = true,
     theme = 'retrowave',
     transparent = true
   })
 
-  local themery = utils.safe_require('themery')
+  local themery = utils.SafeRequire('themery')
   themery.setup({
     themes = {
+      {
+        name = 'OneDark',
+        colorscheme = 'onedark',
+        before = [[
+          vim.o.background = "dark"
+        ]]
+      },
+      {
+        name = 'OneLight',
+        colorscheme = 'onelight',
+        before = [[
+          vim.o.background = "light"
+        ]]
+      },
+      {
+        name = 'OneDark Vivid',
+        colorscheme = 'onedark_vividx',
+        before = [[
+          vim.o.background = "dark"
+        ]]
+      },
       {
         name = 'Gruvbox Light',
         colorscheme = 'gruvbox',
@@ -266,4 +287,4 @@ _M.setup = function()
   })
 end
 
-return _M
+return Module

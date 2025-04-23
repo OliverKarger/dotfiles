@@ -1,33 +1,33 @@
 local utils = require('utils')
 local settings = require('settings')
 
-local _M = {}
+local Module = {}
 
-_M.setup = function()
-  local luasnip = utils.safe_require('luasnip')
-  local cmp = utils.safe_require('cmp')
-  local mason_lspconfig = utils.safe_require('mason-lspconfig')
-  local notify = utils.safe_require('notify')
-  local diag = utils.safe_require('tiny-inline-diagnostic')
+Module.Setup = function()
+  local luasnip = utils.SafeRequire('luasnip')
+  local cmp = utils.SafeRequire('cmp')
+  local mason_lspconfig = utils.SafeRequire('mason-lspconfig')
+  local notify = utils.SafeRequire('notify')
+  local diag = utils.SafeRequire('tiny-inline-diagnostic')
 
   mason_lspconfig.setup({
     automatic_installation = true,
-    ensurere_installed = settings.lsp_servers
+    ensurere_installed = settings.LSPServers
   })
 
-  local function on_lsp_attach(lspname)
+  local function OnLSPAttach(lspname)
     notify(string.format('Language Server %s attached', lspname), "info", { title = 'LSP' })
   end
 
   -- LSPConfig Setup
-  for _, lsp in ipairs(settings.lsp_servers) do
+  for _, lsp in ipairs(settings.LSPServers) do
     local lsp_options = {}
-    if settings.lsp_settings[lsp] then
-      lsp_options = settings.lsp_settings[lsp]
+    if settings.LSPSettings[lsp] then
+      lsp_options = settings.LSPSettings[lsp]
     end
 
-    local setup_options = utils.merge_tables({ on_attach = function() on_lsp_attach(lsp) end }, lsp_options)
-    utils.safe_require('lspconfig')[lsp].setup(setup_options)
+    local setup_options = utils.MergeTables({ on_attach = function() OnLSPAttach(lsp) end }, lsp_options)
+    utils.SafeRequire('lspconfig')[lsp].setup(setup_options)
   end
 
   -- Neovim Diagnostics Configuration
@@ -142,4 +142,4 @@ _M.setup = function()
   }}
 end
 
-return _M
+return Module

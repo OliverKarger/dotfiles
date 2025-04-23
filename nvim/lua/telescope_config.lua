@@ -1,10 +1,10 @@
 local utils = require('utils')
 local settings = require('settings')
 
-local _M = {}
+local Module = {}
 
-_M.setup = function()
-  local telescope = utils.safe_require('telescope')
+Module.Setup = function()
+  local telescope = utils.SafeRequire('telescope')
 
   telescope.setup {
     defaults = {
@@ -23,7 +23,7 @@ _M.setup = function()
     },
     extension = {
       ["ui-select"] = {
-        utils.safe_require('telescope.themes').get_dropdown {}
+        utils.SafeRequire('telescope.themes').get_dropdown {}
       }
     }
   }
@@ -31,4 +31,4 @@ _M.setup = function()
   telescope.load_extension("ui-select")
 end
 
-return _M
+return Module
