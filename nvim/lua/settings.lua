@@ -85,19 +85,33 @@ Module.LSPSettings = {
   clangd = {
     cmd = { "clangd", "--clang-tidy" }
   },
-  omnisharp = {
-    cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-    enable_import_completion = true,
-    organize_imports_on_format = true,
-    enable_roslyn_analyzers = true,
-    settings = {
-      omnisharp = {
-        useModernNet = true, -- uses dotnet CLI and respects SDK-style projects
-        enableEditorConfigSupport = true,
-        enableImportCompletion = true,
+  omnisharp = (function()
+    local pid = tostring(vim.fn.getpid())
+    local omnisharp_path = vim.fn.expand("~\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\libexec\\OmniSharp.dll")
+
+    local dotnet_sdk_path = vim.fn.trim(vim.fn.system("dotnet --list-sdks")):match("^(%d+%.%d+%.%d+)")
+    vim.env.DOTNET_ROOT = "C:\\Program Files\\dotnet"
+    vim.env.MSBuildSDKsPath = "C:\\Program Files\\dotnet\\sdk\\" .. dotnet_sdk_path .. "\\Sdks"
+
+    return {
+      cmd = { "dotnet", omnisharp_path, "--languageserver", "--hostPID", pid },
+      enable_import_completion = true,
+      organize_imports_on_format = true,
+      enable_roslyn_analyzers = true,
+      handlers = {
+        ["$/logTrace"] = function(_, result)
+          print("OmniSharp trace:", result.message)
+        end
+      },
+      settings = {
+        omnisharp = {
+          useModernNet = true,
+          enableEditorConfigSupport = true,
+          enableImportCompletion = true,
+        }
       }
     }
-  }
+  end)()
 }
 
 return Module
