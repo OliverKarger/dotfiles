@@ -26,7 +26,10 @@ Module.Setup = function()
       lsp_options = settings.LSPSettings[lsp]
     end
 
-    local setup_options = utils.MergeTables({ on_attach = function() OnLSPAttach(lsp) end }, lsp_options)
+    local setup_options = utils.MergeTables({
+      on_attach = function() OnLSPAttach(lsp) end,
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    }, lsp_options)
     utils.SafeRequire('lspconfig')[lsp].setup(setup_options)
   end
 

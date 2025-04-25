@@ -225,7 +225,7 @@ Module.Setup = function()
       },
       {
         name = 'OneDark Vivid',
-        colorscheme = 'onedark_vividx',
+        colorscheme = 'onedark_vivid',
         before = [[
           vim.o.background = "dark"
         ]]
