@@ -6,8 +6,7 @@ Module.LSPServers = { "ansiblels", "ansible-lint", "clangd", "omnisharp", "lua_l
 
 Module.ApplyKeymap = function()
   local map = vim.keymap.set
-  local nmap = vim.api.nvim_set_keymap
-  
+
   -- Unbind
   map('n', '<C-t>', '<Nop>', Module.KeymapOptions)
   map('i', '"', '"', Module.KeymapOptions)
@@ -64,6 +63,14 @@ Module.ApplyVimSettings = function()
   vim.opt.colorcolumn = "120"       -- Max 120 Characters per Line
 
   vim.o.linespace = 5               -- Line Height
+
+  if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+    vim.g.mapleader = "\\"   -- Windows
+  elseif vim.fn.has("mac") == 1 then
+    vim.g.mapleader = "¿"    -- macOS 
+  else
+    vim.g.mapleader = "\\"    -- Linux/Unix
+  end
 
   -- Disable netrw (default Neovim Directory Browser)
   vim.g.loaded_netrwPlugin = 1

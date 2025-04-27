@@ -81,8 +81,8 @@ packer.startup(function(use)
 
 end)
 
-settings.ApplyKeymap()
 settings.ApplyVimSettings()
+settings.ApplyKeymap()
 
 -- Load Files
 utils.LoadFiles( { 'lualine_config', 'ui_config', 'telescope_config', 'mason_config', 'lsp_config', 'dap_config' } )
